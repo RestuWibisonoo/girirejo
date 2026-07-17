@@ -110,7 +110,17 @@ const PublikasiPage = () => {
 
   useEffect(() => {
     api.get('/publikasi')
-      .then(res => setPublikasiList(res.data.data || []))
+      .then(res => {
+        const mappedData = (res.data.data || []).map(item => ({
+          ...item,
+          jenis: item.tipe ? item.tipe.charAt(0).toUpperCase() + item.tipe.slice(1) : 'Berita',
+          ringkasan: item.konten,
+          thumbnail_url: item.foto_url,
+          file_url: item.lampiran_url,
+          tanggal: item.tanggal_publikasi
+        }));
+        setPublikasiList(mappedData);
+      })
       .catch(() => setPublikasiList([]))
       .finally(() => setLoading(false));
   }, []);
@@ -122,7 +132,7 @@ const PublikasiPage = () => {
   return (
     <div className="bg-stone-50 min-h-screen">
       {/* ===== HERO SECTION ===== */}
-      <section className="relative bg-gradient-to-br from-slate-800 via-slate-700 to-slate-600 py-24 px-4 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-slate-800 via-slate-700 to-slate-600 py-16 md:py-24 px-4 overflow-hidden">
         <div className="absolute inset-0 opacity-10"
           style={{
             backgroundImage: 'radial-gradient(circle at 2px 2px, #ffffff 1px, transparent 0)',
@@ -136,7 +146,7 @@ const PublikasiPage = () => {
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-sm font-medium px-5 py-2 rounded-full mb-6">
             <BookOpen size={14} /> Transparansi & Informasi
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-5 leading-tight">
+          <h1 className="text-3xl md:text-4xl lg:text-6xl font-extrabold mb-5 leading-tight">
             Berita & Kegiatan<br />
             <span className="text-slate-300">Desa Girirejo</span>
           </h1>

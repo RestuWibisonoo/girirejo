@@ -26,7 +26,15 @@ const Publikasi = () => {
     setLoading(true);
     try {
       const res = await api.get('/publikasi');
-      setData(res.data.data || []);
+      const mappedData = (res.data.data || []).map(item => ({
+        ...item,
+        jenis: item.tipe ? item.tipe.charAt(0).toUpperCase() + item.tipe.slice(1) : 'Berita',
+        ringkasan: item.konten,
+        thumbnail_url: item.foto_url,
+        file_url: item.lampiran_url,
+        tanggal: item.tanggal_publikasi
+      }));
+      setData(mappedData);
     } catch (err) {
       console.error('Gagal mengambil data publikasi:', err);
     } finally {

@@ -49,9 +49,11 @@ const PublikasiModal = ({ isOpen, onClose, onSuccess, initialData }) => {
     setLoading(true);
 
     const data = new FormData();
-    Object.entries(formData).forEach(([key, val]) => data.append(key, val));
-    if (thumbnail) data.append('thumbnail', thumbnail);
-    if (filePdf) data.append('file', filePdf);
+    data.append('judul', formData.judul);
+    data.append('tipe', formData.jenis.toLowerCase());
+    data.append('konten', formData.ringkasan);
+    if (thumbnail) data.append('gambar', thumbnail);
+    if (filePdf) data.append('lampiran', filePdf);
 
     try {
       if (initialData) {

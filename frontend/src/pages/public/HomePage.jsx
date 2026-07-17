@@ -48,7 +48,7 @@ const HomePage = () => {
   return (
     <div className="bg-stone-50">
       {/* ===== HERO SECTION ===== */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+      <section className="relative min-h-[75vh] md:min-h-screen flex flex-col items-center justify-center overflow-hidden pt-12 md:pt-0">
         {/* Background Gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-900 via-teal-800 to-emerald-700" />
         {/* Dekorasi Blob */}
@@ -56,7 +56,7 @@ const HomePage = () => {
         <div className="absolute bottom-20 -right-20 w-80 h-80 bg-teal-400/20 rounded-full blur-3xl" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-600/10 rounded-full blur-3xl" />
 
-        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto py-32">
+        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto py-12 md:py-32">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-emerald-100 text-sm font-medium px-5 py-2.5 rounded-full mb-8">
             <MapPin size={14} />
@@ -64,7 +64,7 @@ const HomePage = () => {
           </div>
 
           {/* Heading */}
-          <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight tracking-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white mb-6 leading-tight tracking-tight">
             Selamat Datang di{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-200">
               Desa Girirejo
@@ -111,9 +111,9 @@ const HomePage = () => {
       </section>
 
       {/* ===== VISI & MISI SECTION ===== */}
-      <section className="py-24 px-4">
+      <section className="py-16 md:py-24 px-4">
         <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
             {/* Dekorasi Kiri */}
             <div className="relative">
               <div className="bg-gradient-to-br from-emerald-700 to-teal-600 rounded-3xl p-10 text-white shadow-2xl relative overflow-hidden">
@@ -134,7 +134,7 @@ const HomePage = () => {
               <div className="inline-block bg-emerald-100 text-brand-primary text-sm font-bold px-4 py-2 rounded-full mb-5">
                 🎯 Misi Kami
               </div>
-              <h2 className="text-4xl font-extrabold text-slate-800 mb-8 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-8 leading-tight">
                 Bergerak Maju <br />
                 <span className="text-brand-primary">Bersama Warga</span>
               </h2>
@@ -159,16 +159,16 @@ const HomePage = () => {
       </section>
 
       {/* ===== LAYANAN SECTION ===== */}
-      <section className="py-24 px-4 bg-gradient-to-b from-stone-50 to-stone-100">
+      <section className="py-16 md:py-24 px-4 bg-gradient-to-b from-stone-50 to-stone-100">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12 md:mb-16">
             <div className="inline-block bg-emerald-100 text-brand-primary text-sm font-bold px-4 py-2 rounded-full mb-5">
               Layanan Digital Desa
             </div>
-            <h2 className="text-4xl font-extrabold text-slate-800 mb-4">Semua Informasi, Satu Tempat</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-4">Semua Informasi, Satu Tempat</h2>
             <p className="text-slate-500 max-w-xl mx-auto">Akses berbagai informasi dan layanan desa dengan mudah melalui portal digital kami.</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-4 md:gap-6">
             <FeatureCard
               icon="🧑‍🤝‍🧑"
               title="Struktur Perangkat Desa"
@@ -195,18 +195,18 @@ const HomePage = () => {
       </section>
 
       {/* ===== PERANGKAT DESA SECTION ===== */}
-      <section className="py-24 px-4">
+      <section className="py-16 md:py-24 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12 md:mb-16">
             <div className="inline-block bg-emerald-100 text-brand-primary text-sm font-bold px-4 py-2 rounded-full mb-5">
               Tim Pemerintahan
             </div>
-            <h2 className="text-4xl font-extrabold text-slate-800 mb-4">Perangkat Desa Girirejo</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-4">Perangkat Desa Girirejo</h2>
             <p className="text-slate-500">Hover pada foto untuk mengenal lebih dekat sosok di balik layanan desa kami.</p>
           </div>
 
           {loading ? (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
               {[...Array(4)].map((_, i) => (
                 <div key={i} className="flex flex-col items-center gap-4 animate-pulse">
                   <div className="w-full aspect-[4/5] bg-stone-200 rounded-2xl max-w-[280px]" />
@@ -221,7 +221,7 @@ const HomePage = () => {
               <p className="font-medium">Data perangkat desa belum tersedia.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
               {perangkat.map((p) => (
                 <PerangkatCard key={p.id} perangkat={p} />
               ))}

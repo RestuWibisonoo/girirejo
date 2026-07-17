@@ -4,3 +4,11 @@
   --color-brand-primary: #047857;
   --color-brand-accent: #f97316;
 }
+
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

@@ -28,7 +28,7 @@ const UMKMPage = () => {
   return (
     <div className="bg-stone-50 min-h-screen">
       {/* ===== HERO SECTION ===== */}
-      <section className="relative bg-gradient-to-br from-orange-600 via-orange-500 to-amber-400 py-24 px-4 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-orange-600 via-orange-500 to-amber-400 py-16 md:py-24 px-4 overflow-hidden">
         <div className="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 blur-2xl" />
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-black/10 rounded-full translate-x-1/4 translate-y-1/4 blur-3xl" />
 
@@ -36,7 +36,7 @@ const UMKMPage = () => {
           <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 text-sm font-medium px-5 py-2 rounded-full mb-6">
             <Store size={14} /> Ekonomi Lokal Desa
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-5 leading-tight">
+          <h1 className="text-3xl md:text-4xl lg:text-6xl font-extrabold mb-5 leading-tight">
             Katalog UMKM<br />
             <span className="text-orange-100">Desa Girirejo</span>
           </h1>
@@ -62,7 +62,7 @@ const UMKMPage = () => {
           </div>
 
           {/* Category Filters */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 w-full md:w-auto">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 w-full md:w-auto scrollbar-hide">
             <SlidersHorizontal size={14} className="text-slate-400 flex-shrink-0" />
             <div className="flex gap-2 flex-nowrap">
               {CATEGORIES.map(cat => (
