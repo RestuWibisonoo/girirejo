@@ -4,7 +4,7 @@ const UmkmModel = {
     // Fungsi getAll disempurnakan dengan LEFT JOIN untuk menarik nama_kategori
     getAll: async (kategori_id) => {
         let query = `
-            SELECT u.*, k.nama_kategori 
+            SELECT u.*, k.nama_kategori as kategori 
             FROM umkm_katalog u
             LEFT JOIN kategori_umkm k ON u.kategori_id = k.id
         `;
@@ -23,7 +23,7 @@ const UmkmModel = {
 
     getById: async (id) => {
         const query = `
-            SELECT u.*, k.nama_kategori 
+            SELECT u.*, k.nama_kategori as kategori 
             FROM umkm_katalog u
             LEFT JOIN kategori_umkm k ON u.kategori_id = k.id
             WHERE u.id = ?

@@ -37,9 +37,21 @@ const umkmController = {
 
     create: async (req, res) => {
         try {
-            const { kategori_id, nama_usaha, nama_pemilik, deskripsi, harga_mulai, no_wa, link_gmaps } = req.body;
+            let { kategori_id, kategori, nama_usaha, nama_pemilik, deskripsi, harga_mulai, no_wa, link_gmaps } = req.body;
             if (!nama_usaha) {
                 return res.status(400).json({ status: "error", message: "Field nama_usaha wajib diisi." });
+            }
+
+            if (!kategori_id && kategori) {
+                const KategoriUmkmModel = require('../models/kategoriUmkmModel');
+                const kats = await KategoriUmkmModel.getAll();
+                let found = kats.find(k => k.nama_kategori.toLowerCase() === kategori.toLowerCase());
+                if (!found) {
+                    const slug = kategori.toLowerCase().replace(/\s+/g, '-');
+                    kategori_id = await KategoriUmkmModel.create({ nama_kategori: kategori, slug });
+                } else {
+                    kategori_id = found.id;
+                }
             }
 
             let foto_url = null;
@@ -67,6 +79,19 @@ const umkmController = {
             }
 
             const body = req.body;
+            let final_kategori_id = body.kategori_id !== undefined ? body.kategori_id : existingData.kategori_id;
+
+            if (body.kategori && body.kategori !== existingData.kategori) {
+                const KategoriUmkmModel = require('../models/kategoriUmkmModel');
+                const kats = await KategoriUmkmModel.getAll();
+                let found = kats.find(k => k.nama_kategori.toLowerCase() === body.kategori.toLowerCase());
+                if (!found) {
+                    const slug = body.kategori.toLowerCase().replace(/\s+/g, '-');
+                    final_kategori_id = await KategoriUmkmModel.create({ nama_kategori: body.kategori, slug });
+                } else {
+                    final_kategori_id = found.id;
+                }
+            }
             let foto_url = existingData.foto_url;
 
             if (req.file) {
@@ -75,7 +100,7 @@ const umkmController = {
             }
 
             await UmkmModel.update(id, {
-                kategori_id: body.kategori_id !== undefined ? body.kategori_id : existingData.kategori_id,
+                kategori_id: final_kategori_id,
                 nama_usaha: body.nama_usaha || existingData.nama_usaha,
                 nama_pemilik: body.nama_pemilik || existingData.nama_pemilik,
                 deskripsi: body.deskripsi || existingData.deskripsi,

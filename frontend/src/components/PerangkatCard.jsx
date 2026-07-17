@@ -13,16 +13,16 @@ const PerangkatCard = ({ perangkat }) => {
   return (
     <div className="flex flex-col items-center">
       <div className="relative group overflow-hidden rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl transition-all duration-300 w-full max-w-[280px] aspect-[4/5] bg-stone-100 mb-4 cursor-pointer">
-        {/* Gambar statis/formal (akan menghilang saat hover) */}
+        {/* Gambar statis/formal (hitam putih, akan memudar saat hover) */}
         <img 
             src={fotoAwal} 
-            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out group-hover:opacity-0" 
+            className="absolute z-10 inset-0 w-full h-full object-cover grayscale transition-all duration-700 ease-in-out group-hover:opacity-0" 
             alt={`Foto formal ${perangkat.nama_lengkap}`} 
         />
-        {/* Gambar interaktif/santai (akan muncul perlahan dan sedikit zoom saat hover) */}
+        {/* Gambar interaktif/santai (akan muncul perlahan tanpa zoom saat hover) */}
         <img 
             src={fotoHover} 
-            className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105" 
+            className="absolute z-0 inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out" 
             alt={`Foto santai ${perangkat.nama_lengkap}`} 
         />
       </div>

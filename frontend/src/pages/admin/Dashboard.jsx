@@ -56,7 +56,7 @@ const Dashboard = () => {
           title="Publikasi Desa" 
           desc="Berita, Kegiatan & Transparansi."
           icon={<FileText size={28} />} 
-          bgColor="bg-blue-600 shadow-blue-200 shadow-lg"
+          bgColor="bg-indigo-600 shadow-indigo-200 shadow-lg"
           link="/admin/publikasi"
         />
       </div>
@@ -75,7 +75,7 @@ const Dashboard = () => {
              <span>Gunakan jenis publikasi <strong>Akuntabilitas</strong> setiap akhir tahun untuk transparansi penggunaan Dana Desa (Format PDF didukung).</span>
           </li>
           <li className="flex items-start">
-             <span className="bg-blue-100 text-blue-600 p-1 rounded-md mr-3 mt-0.5"><Store size={14}/></span>
+             <span className="bg-indigo-100 text-indigo-600 p-1 rounded-md mr-3 mt-0.5"><Store size={14}/></span>
              <span>Tambahkan nomor WhatsApp di Katalog UMKM agar calon pembeli bisa langsung terhubung dengan warga desa.</span>
           </li>
         </ul>

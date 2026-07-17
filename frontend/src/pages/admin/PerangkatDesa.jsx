@@ -118,7 +118,7 @@ const PerangkatDesa = () => {
                       <div className="flex justify-end gap-3">
                         <button 
                           onClick={() => handleOpenEdit(item)}
-                          className="flex items-center justify-center p-2.5 text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-xl transition-colors shadow-sm"
+                          className="flex items-center justify-center p-2.5 text-amber-600 bg-amber-50 hover:bg-amber-100 rounded-xl transition-colors shadow-sm"
                           title="Edit Data"
                         >
                           <Edit2 size={18} />
