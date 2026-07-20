@@ -265,12 +265,17 @@ const HomePage = () => {
               {perangkat.filter(p => p.urutan_tampil >= 3 && p.urutan_tampil <= 5).length > 0 && (
                 <div className="mt-8 border-t border-emerald-100/50 pt-12">
                   <h3 className="text-center text-xl font-bold text-slate-700 mb-8">Urusan Sekretariat</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 justify-center">
-                    {perangkat.filter(p => p.urutan_tampil >= 3 && p.urutan_tampil <= 5).map((p) => (
-                      <div className="flex justify-center" key={p.id}>
-                        <div className="w-full max-w-[280px]"><PerangkatCard perangkat={p} /></div>
-                      </div>
-                    ))}
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 justify-center">
+                    {perangkat.filter(p => p.urutan_tampil >= 3 && p.urutan_tampil <= 5).map((p, index, arr) => {
+                      const isOddLast = arr.length % 2 !== 0 && index === arr.length - 1;
+                      return (
+                        <div className={`flex justify-center ${isOddLast ? 'col-span-2 md:col-span-1' : ''}`} key={p.id}>
+                          <div className={`max-w-[280px] transition-all duration-300 ${isOddLast ? 'w-[calc(50%-0.5rem)] md:w-full' : 'w-full'}`}>
+                            <PerangkatCard perangkat={p} />
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -279,12 +284,17 @@ const HomePage = () => {
               {perangkat.filter(p => p.urutan_tampil >= 6 && p.urutan_tampil <= 8).length > 0 && (
                 <div className="mt-4 border-t border-emerald-100/50 pt-12">
                   <h3 className="text-center text-xl font-bold text-slate-700 mb-8">Pelaksana Teknis</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 justify-center">
-                    {perangkat.filter(p => p.urutan_tampil >= 6 && p.urutan_tampil <= 8).map((p) => (
-                      <div className="flex justify-center" key={p.id}>
-                        <div className="w-full max-w-[280px]"><PerangkatCard perangkat={p} /></div>
-                      </div>
-                    ))}
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 justify-center">
+                    {perangkat.filter(p => p.urutan_tampil >= 6 && p.urutan_tampil <= 8).map((p, index, arr) => {
+                      const isOddLast = arr.length % 2 !== 0 && index === arr.length - 1;
+                      return (
+                        <div className={`flex justify-center ${isOddLast ? 'col-span-2 md:col-span-1' : ''}`} key={p.id}>
+                          <div className={`max-w-[280px] transition-all duration-300 ${isOddLast ? 'w-[calc(50%-0.5rem)] md:w-full' : 'w-full'}`}>
+                            <PerangkatCard perangkat={p} />
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -293,12 +303,17 @@ const HomePage = () => {
               {perangkat.filter(p => p.urutan_tampil >= 9).length > 0 && (
                 <div className="mt-4 border-t border-emerald-100/50 pt-12">
                   <h3 className="text-center text-xl font-bold text-slate-700 mb-8">Pelaksana Kewilayahan (Kepala Dusun)</h3>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 justify-center">
-                    {perangkat.filter(p => p.urutan_tampil >= 9).map((p) => (
-                      <div className="flex justify-center" key={p.id}>
-                        <div className="w-full max-w-[280px]"><PerangkatCard perangkat={p} /></div>
-                      </div>
-                    ))}
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 justify-center">
+                    {perangkat.filter(p => p.urutan_tampil >= 9).map((p, index, arr) => {
+                      const isOddLast = arr.length % 2 !== 0 && index === arr.length - 1;
+                      return (
+                        <div className={`flex justify-center ${isOddLast ? 'col-span-2 md:col-span-1' : ''}`} key={p.id}>
+                          <div className={`max-w-[280px] transition-all duration-300 ${isOddLast ? 'w-[calc(50%-0.5rem)] md:w-full' : 'w-full'}`}>
+                            <PerangkatCard perangkat={p} />
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
