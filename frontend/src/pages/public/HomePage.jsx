@@ -262,61 +262,76 @@ const HomePage = () => {
               )}
 
               {/* Level 3: Kaur */}
-              {perangkat.filter(p => p.urutan_tampil >= 3 && p.urutan_tampil <= 5).length > 0 && (
-                <div className="mt-8 border-t border-emerald-100/50 pt-12">
-                  <h3 className="text-center text-xl font-bold text-slate-700 mb-8">Urusan Sekretariat</h3>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 justify-center">
-                    {perangkat.filter(p => p.urutan_tampil >= 3 && p.urutan_tampil <= 5).map((p, index, arr) => {
-                      const isOddLast = arr.length % 2 !== 0 && index === arr.length - 1;
-                      return (
-                        <div className={`flex justify-center ${isOddLast ? 'col-span-2 md:col-span-1' : ''}`} key={p.id}>
-                          <div className={`max-w-[280px] transition-all duration-300 ${isOddLast ? 'w-[calc(50%-0.5rem)] md:w-full' : 'w-full'}`}>
-                            <PerangkatCard perangkat={p} />
-                          </div>
+              {(() => {
+                const kaur = perangkat.filter(p => p.urutan_tampil >= 3 && p.urutan_tampil <= 5);
+                if (kaur.length === 0) return null;
+                const kaurDup = [...kaur, ...kaur, ...kaur];
+
+                return (
+                  <div className="mt-8 border-t border-emerald-100/50 pt-12 overflow-hidden w-full relative">
+                    <h3 className="text-center text-xl font-bold text-slate-700 mb-8">Urusan Sekretariat</h3>
+                    
+                    <div className="flex w-max animate-marquee-left hover:[animation-play-state:paused] gap-4 md:gap-8">
+                      {kaurDup.map((p, index) => (
+                        <div className="w-[180px] md:w-[260px] shrink-0" key={`k-${p.id}-${index}`}>
+                          <PerangkatCard perangkat={p} />
                         </div>
-                      );
-                    })}
+                      ))}
+                    </div>
+                    
+                    <div className="absolute top-20 left-0 w-8 md:w-32 h-full bg-gradient-to-r from-stone-50 to-transparent pointer-events-none"></div>
+                    <div className="absolute top-20 right-0 w-8 md:w-32 h-full bg-gradient-to-l from-stone-50 to-transparent pointer-events-none"></div>
                   </div>
-                </div>
-              )}
+                );
+              })()}
 
               {/* Level 4: Kasi */}
-              {perangkat.filter(p => p.urutan_tampil >= 6 && p.urutan_tampil <= 8).length > 0 && (
-                <div className="mt-4 border-t border-emerald-100/50 pt-12">
-                  <h3 className="text-center text-xl font-bold text-slate-700 mb-8">Pelaksana Teknis</h3>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 justify-center">
-                    {perangkat.filter(p => p.urutan_tampil >= 6 && p.urutan_tampil <= 8).map((p, index, arr) => {
-                      const isOddLast = arr.length % 2 !== 0 && index === arr.length - 1;
-                      return (
-                        <div className={`flex justify-center ${isOddLast ? 'col-span-2 md:col-span-1' : ''}`} key={p.id}>
-                          <div className={`max-w-[280px] transition-all duration-300 ${isOddLast ? 'w-[calc(50%-0.5rem)] md:w-full' : 'w-full'}`}>
-                            <PerangkatCard perangkat={p} />
-                          </div>
+              {(() => {
+                const kasi = perangkat.filter(p => p.urutan_tampil >= 6 && p.urutan_tampil <= 8);
+                if (kasi.length === 0) return null;
+                const kasiDup = [...kasi, ...kasi, ...kasi];
+
+                return (
+                  <div className="mt-4 border-t border-emerald-100/50 pt-12 overflow-hidden w-full relative">
+                    <h3 className="text-center text-xl font-bold text-slate-700 mb-8">Pelaksana Teknis</h3>
+                    
+                    <div className="flex w-max animate-marquee-right hover:[animation-play-state:paused] gap-4 md:gap-8">
+                      {kasiDup.map((p, index) => (
+                        <div className="w-[180px] md:w-[260px] shrink-0" key={`t-${p.id}-${index}`}>
+                          <PerangkatCard perangkat={p} />
                         </div>
-                      );
-                    })}
+                      ))}
+                    </div>
+                    
+                    <div className="absolute top-20 left-0 w-8 md:w-32 h-full bg-gradient-to-r from-stone-50 to-transparent pointer-events-none"></div>
+                    <div className="absolute top-20 right-0 w-8 md:w-32 h-full bg-gradient-to-l from-stone-50 to-transparent pointer-events-none"></div>
                   </div>
-                </div>
-              )}
+                );
+              })()}
 
               {/* Level 5: Kadus */}
-              {perangkat.filter(p => p.urutan_tampil >= 9).length > 0 && (
-                <div className="mt-4 border-t border-emerald-100/50 pt-12">
-                  <h3 className="text-center text-xl font-bold text-slate-700 mb-8">Pelaksana Kewilayahan (Kepala Dusun)</h3>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 justify-center">
-                    {perangkat.filter(p => p.urutan_tampil >= 9).map((p, index, arr) => {
-                      const isOddLast = arr.length % 2 !== 0 && index === arr.length - 1;
-                      return (
-                        <div className={`flex justify-center ${isOddLast ? 'col-span-2 md:col-span-1' : ''}`} key={p.id}>
-                          <div className={`max-w-[280px] transition-all duration-300 ${isOddLast ? 'w-[calc(50%-0.5rem)] md:w-full' : 'w-full'}`}>
-                            <PerangkatCard perangkat={p} />
-                          </div>
+              {(() => {
+                const kadus = perangkat.filter(p => p.urutan_tampil >= 9);
+                if (kadus.length === 0) return null;
+                const kadusDup = [...kadus, ...kadus, ...kadus];
+
+                return (
+                  <div className="mt-4 border-t border-emerald-100/50 pt-12 overflow-hidden w-full relative">
+                    <h3 className="text-center text-xl font-bold text-slate-700 mb-8">Pelaksana Kewilayahan (Kepala Dusun)</h3>
+                    
+                    <div className="flex w-max animate-marquee-left hover:[animation-play-state:paused] gap-4 md:gap-8">
+                      {kadusDup.map((p, index) => (
+                        <div className="w-[180px] md:w-[260px] shrink-0" key={`d-${p.id}-${index}`}>
+                          <PerangkatCard perangkat={p} />
                         </div>
-                      );
-                    })}
+                      ))}
+                    </div>
+                    
+                    <div className="absolute top-20 left-0 w-8 md:w-32 h-full bg-gradient-to-r from-stone-50 to-transparent pointer-events-none"></div>
+                    <div className="absolute top-20 right-0 w-8 md:w-32 h-full bg-gradient-to-l from-stone-50 to-transparent pointer-events-none"></div>
                   </div>
-                </div>
-              )}
+                );
+              })()}
             </div>
           )}
         </div>

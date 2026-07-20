@@ -3,6 +3,19 @@
 @theme {
   --color-brand-primary: #047857;
   --color-brand-accent: #f97316;
+
+  --animate-marquee-left: marquee-left 20s linear infinite;
+  --animate-marquee-right: marquee-right 20s linear infinite;
+}
+
+@keyframes marquee-left {
+  0% { transform: translateX(-33.333%); }
+  100% { transform: translateX(0%); }
+}
+
+@keyframes marquee-right {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-33.333%); }
 }
 
 .scrollbar-hide {
