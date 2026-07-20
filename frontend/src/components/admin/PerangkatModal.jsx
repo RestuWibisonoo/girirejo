@@ -2,8 +2,25 @@ import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
 import { X, UploadCloud } from 'lucide-react';
 
+const JABATAN_OPTIONS = [
+  { label: 'Kepala Desa', value: 'Kepala Desa', urutan: 1 },
+  { label: 'Sekretaris Desa', value: 'Sekretaris Desa', urutan: 2 },
+  { label: 'Kaur Tata Usaha dan Umum', value: 'Kaur Tata Usaha dan Umum', urutan: 3 },
+  { label: 'Kaur Keuangan', value: 'Kaur Keuangan', urutan: 4 },
+  { label: 'Kaur Perencanaan', value: 'Kaur Perencanaan', urutan: 5 },
+  { label: 'Kasi Pemerintahan', value: 'Kasi Pemerintahan', urutan: 6 },
+  { label: 'Kasi Kesejahteraan', value: 'Kasi Kesejahteraan', urutan: 7 },
+  { label: 'Kasi Pelayanan', value: 'Kasi Pelayanan', urutan: 8 },
+  { label: 'Kepala Dusun (Kadus) Beran', value: 'Kepala Dusun (Kadus) Beran', urutan: 9 },
+  { label: 'Kepala Dusun (Kadus) Geger', value: 'Kepala Dusun (Kadus) Geger', urutan: 10 },
+  { label: 'Kepala Dusun (Kadus) Kaliampo', value: 'Kepala Dusun (Kadus) Kaliampo', urutan: 11 },
+  { label: 'Kepala Dusun (Kadus) Pending', value: 'Kepala Dusun (Kadus) Pending', urutan: 12 },
+  { label: 'Kepala Dusun (Kadus) Salakan', value: 'Kepala Dusun (Kadus) Salakan', urutan: 13 },
+  { label: 'Kepala Dusun (Kadus) Sindas', value: 'Kepala Dusun (Kadus) Sindas', urutan: 14 }
+];
+
 const PerangkatModal = ({ isOpen, onClose, onSuccess, initialData }) => {
-  const [formData, setFormData] = useState({ nama_lengkap: '', jabatan: '' });
+  const [formData, setFormData] = useState({ nama_lengkap: '', jabatan: '', urutan_tampil: 99 });
   const [fotoAwal, setFotoAwal] = useState(null);
   const [fotoHover, setFotoHover] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -14,13 +31,14 @@ const PerangkatModal = ({ isOpen, onClose, onSuccess, initialData }) => {
     if (initialData) {
       setFormData({
         nama_lengkap: initialData.nama_lengkap || '',
-        jabatan: initialData.jabatan || ''
+        jabatan: initialData.jabatan || '',
+        urutan_tampil: initialData.urutan_tampil || 99
       });
       setFotoAwal(null);
       setFotoHover(null);
       setError('');
     } else {
-      setFormData({ nama_lengkap: '', jabatan: '' });
+      setFormData({ nama_lengkap: '', jabatan: JABATAN_OPTIONS[0].value, urutan_tampil: JABATAN_OPTIONS[0].urutan });
       setFotoAwal(null);
       setFotoHover(null);
       setError('');
@@ -37,6 +55,7 @@ const PerangkatModal = ({ isOpen, onClose, onSuccess, initialData }) => {
     const data = new FormData();
     data.append('nama_lengkap', formData.nama_lengkap);
     data.append('jabatan', formData.jabatan);
+    data.append('urutan_tampil', formData.urutan_tampil);
     
     if (fotoAwal) data.append('foto_awal', fotoAwal);
     if (fotoHover) data.append('foto_hover', fotoHover);
@@ -98,15 +117,24 @@ const PerangkatModal = ({ isOpen, onClose, onSuccess, initialData }) => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">Jabatan <span className="text-red-500">*</span></label>
-              <input 
-                type="text" 
+              <label className="block text-sm font-medium text-slate-700 mb-2">Jabatan / Posisi <span className="text-red-500">*</span></label>
+              <select 
                 required 
-                className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary transition-all"
-                placeholder="Cth: Kepala Urusan Perencanaan"
+                className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary transition-all appearance-none"
                 value={formData.jabatan}
-                onChange={(e) => setFormData({...formData, jabatan: e.target.value})}
-              />
+                onChange={(e) => {
+                  const selectedOpt = JABATAN_OPTIONS.find(opt => opt.value === e.target.value);
+                  setFormData({
+                    ...formData, 
+                    jabatan: e.target.value,
+                    urutan_tampil: selectedOpt ? selectedOpt.urutan : 99
+                  });
+                }}
+              >
+                {JABATAN_OPTIONS.map((opt) => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                ))}
+              </select>
             </div>
 
             <div className="grid grid-cols-2 gap-4 pt-2">

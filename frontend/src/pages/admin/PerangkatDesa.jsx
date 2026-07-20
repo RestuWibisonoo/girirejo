@@ -89,51 +89,93 @@ const PerangkatDesa = () => {
                   <td colSpan="5" className="p-12 text-center text-slate-500 font-medium">Belum ada data perangkat desa. Klik tombol Tambah Data.</td>
                 </tr>
               ) : (
-                data.map((item) => (
-                  <tr key={item.id} className="border-b border-stone-50 hover:bg-stone-50/50 transition-colors">
-                    <td className="p-5 text-slate-500 font-medium">#{item.id}</td>
-                    <td className="p-5">
-                      <div className="w-14 h-14 rounded-xl bg-stone-200 overflow-hidden shadow-sm border border-stone-200">
-                        {item.foto_awal_url ? (
-                          <img src={`http://localhost:5001/uploads/${item.foto_awal_url}`} alt="Formal" className="w-full h-full object-cover" />
-                        ) : (
-                          <span className="flex items-center justify-center w-full h-full text-[10px] text-slate-400">Kosong</span>
+                <>
+                  {/* Helper to render rows */}
+                  {(() => {
+                    const renderRows = (groupData) => {
+                      return groupData.map((item) => (
+                        <tr key={item.id} className="border-b border-stone-50 hover:bg-stone-50/50 transition-colors">
+                          <td className="p-5 text-slate-500 font-medium">#{item.id}</td>
+                          <td className="p-5">
+                            <div className="w-14 h-14 rounded-xl bg-stone-200 overflow-hidden shadow-sm border border-stone-200">
+                              {item.foto_awal_url ? (
+                                <img src={`http://localhost:5001/uploads/${item.foto_awal_url}`} alt="Formal" className="w-full h-full object-cover" />
+                              ) : (
+                                <span className="flex items-center justify-center w-full h-full text-[10px] text-slate-400">Kosong</span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="p-5">
+                            <div className="w-14 h-14 rounded-xl bg-stone-200 overflow-hidden shadow-sm border-2 border-brand-accent/20">
+                              {item.foto_hover_url ? (
+                                <img src={`http://localhost:5001/uploads/${item.foto_hover_url}`} alt="Hover" className="w-full h-full object-cover" />
+                              ) : (
+                                <span className="flex items-center justify-center w-full h-full text-[10px] text-slate-400">Kosong</span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="p-5">
+                              <div className="font-bold text-slate-800 text-lg mb-1">{item.nama_lengkap}</div>
+                              <div className="text-brand-primary font-medium text-sm inline-flex items-center bg-emerald-50 px-2 py-0.5 rounded-md">{item.jabatan}</div>
+                          </td>
+                          <td className="p-5">
+                            <div className="flex justify-end gap-3">
+                              <button 
+                                onClick={() => handleOpenEdit(item)}
+                                className="flex items-center justify-center p-2.5 text-amber-600 bg-amber-50 hover:bg-amber-100 rounded-xl transition-colors shadow-sm"
+                                title="Edit Data"
+                              >
+                                <Edit2 size={18} />
+                              </button>
+                              <button 
+                                onClick={() => handleDelete(item.id, item.nama_lengkap)}
+                                className="flex items-center justify-center p-2.5 text-red-600 bg-red-50 hover:bg-red-100 hover:text-red-700 rounded-xl transition-colors shadow-sm"
+                                title="Hapus Data Permanen"
+                              >
+                                <Trash2 size={18} />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ));
+                    };
+
+                    const kades = data.filter(d => d.urutan_tampil === 1);
+                    const sekdes = data.filter(d => d.urutan_tampil === 2);
+                    const kaur = data.filter(d => d.urutan_tampil >= 3 && d.urutan_tampil <= 5);
+                    const kasi = data.filter(d => d.urutan_tampil >= 6 && d.urutan_tampil <= 8);
+                    const kadus = data.filter(d => d.urutan_tampil >= 9);
+
+                    return (
+                      <>
+                        {kades.length > 0 && (
+                          <tr><td colSpan="5" className="px-5 py-3 bg-stone-100 text-slate-700 font-bold text-sm border-b border-stone-200">Kepala Desa</td></tr>
                         )}
-                      </div>
-                    </td>
-                    <td className="p-5">
-                      <div className="w-14 h-14 rounded-xl bg-stone-200 overflow-hidden shadow-sm border-2 border-brand-accent/20">
-                        {item.foto_hover_url ? (
-                          <img src={`http://localhost:5001/uploads/${item.foto_hover_url}`} alt="Hover" className="w-full h-full object-cover" />
-                        ) : (
-                          <span className="flex items-center justify-center w-full h-full text-[10px] text-slate-400">Kosong</span>
+                        {renderRows(kades)}
+
+                        {sekdes.length > 0 && (
+                          <tr><td colSpan="5" className="px-5 py-3 bg-stone-100 text-slate-700 font-bold text-sm border-b border-stone-200">Sekretaris Desa</td></tr>
                         )}
-                      </div>
-                    </td>
-                    <td className="p-5">
-                        <div className="font-bold text-slate-800 text-lg mb-1">{item.nama_lengkap}</div>
-                        <div className="text-brand-primary font-medium text-sm inline-flex items-center bg-emerald-50 px-2 py-0.5 rounded-md">{item.jabatan}</div>
-                    </td>
-                    <td className="p-5">
-                      <div className="flex justify-end gap-3">
-                        <button 
-                          onClick={() => handleOpenEdit(item)}
-                          className="flex items-center justify-center p-2.5 text-amber-600 bg-amber-50 hover:bg-amber-100 rounded-xl transition-colors shadow-sm"
-                          title="Edit Data"
-                        >
-                          <Edit2 size={18} />
-                        </button>
-                        <button 
-                          onClick={() => handleDelete(item.id, item.nama_lengkap)}
-                          className="flex items-center justify-center p-2.5 text-red-600 bg-red-50 hover:bg-red-100 hover:text-red-700 rounded-xl transition-colors shadow-sm"
-                          title="Hapus Data Permanen"
-                        >
-                          <Trash2 size={18} />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
+                        {renderRows(sekdes)}
+
+                        {kaur.length > 0 && (
+                          <tr><td colSpan="5" className="px-5 py-3 bg-stone-100 text-slate-700 font-bold text-sm border-b border-stone-200">Urusan Sekretariat (Kaur)</td></tr>
+                        )}
+                        {renderRows(kaur)}
+
+                        {kasi.length > 0 && (
+                          <tr><td colSpan="5" className="px-5 py-3 bg-stone-100 text-slate-700 font-bold text-sm border-b border-stone-200">Pelaksana Teknis (Kasi)</td></tr>
+                        )}
+                        {renderRows(kasi)}
+
+                        {kadus.length > 0 && (
+                          <tr><td colSpan="5" className="px-5 py-3 bg-stone-100 text-slate-700 font-bold text-sm border-b border-stone-200">Pelaksana Kewilayahan (Kepala Dusun)</td></tr>
+                        )}
+                        {renderRows(kadus)}
+                      </>
+                    );
+                  })()}
+                </>
               )}
             </tbody>
           </table>

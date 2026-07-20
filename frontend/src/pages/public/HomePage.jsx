@@ -237,10 +237,71 @@ const HomePage = () => {
               <p className="font-medium">Data perangkat desa belum tersedia.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
-              {perangkat.map((p) => (
-                <PerangkatCard key={p.id} perangkat={p} />
-              ))}
+            <div className="flex flex-col gap-12 md:gap-16">
+              {/* Level 1: Kepala Desa */}
+              {perangkat.filter(p => p.urutan_tampil === 1).length > 0 && (
+                <div className="flex flex-col items-center relative">
+                  <div className="w-full max-w-[280px]">
+                    {perangkat.filter(p => p.urutan_tampil === 1).map((p) => (
+                      <PerangkatCard key={p.id} perangkat={p} />
+                    ))}
+                  </div>
+                  <div className="hidden md:block w-px h-12 bg-emerald-200 mt-4 absolute -bottom-16"></div>
+                </div>
+              )}
+
+              {/* Level 2: Sekretaris Desa */}
+              {perangkat.filter(p => p.urutan_tampil === 2).length > 0 && (
+                <div className="flex flex-col items-center relative mt-4 md:mt-8">
+                  <div className="w-full max-w-[280px]">
+                    {perangkat.filter(p => p.urutan_tampil === 2).map((p) => (
+                      <PerangkatCard key={p.id} perangkat={p} />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Level 3: Kaur */}
+              {perangkat.filter(p => p.urutan_tampil >= 3 && p.urutan_tampil <= 5).length > 0 && (
+                <div className="mt-8 border-t border-emerald-100/50 pt-12">
+                  <h3 className="text-center text-xl font-bold text-slate-700 mb-8">Urusan Sekretariat</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 justify-center">
+                    {perangkat.filter(p => p.urutan_tampil >= 3 && p.urutan_tampil <= 5).map((p) => (
+                      <div className="flex justify-center" key={p.id}>
+                        <div className="w-full max-w-[280px]"><PerangkatCard perangkat={p} /></div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Level 4: Kasi */}
+              {perangkat.filter(p => p.urutan_tampil >= 6 && p.urutan_tampil <= 8).length > 0 && (
+                <div className="mt-4 border-t border-emerald-100/50 pt-12">
+                  <h3 className="text-center text-xl font-bold text-slate-700 mb-8">Pelaksana Teknis</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 justify-center">
+                    {perangkat.filter(p => p.urutan_tampil >= 6 && p.urutan_tampil <= 8).map((p) => (
+                      <div className="flex justify-center" key={p.id}>
+                        <div className="w-full max-w-[280px]"><PerangkatCard perangkat={p} /></div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Level 5: Kadus */}
+              {perangkat.filter(p => p.urutan_tampil >= 9).length > 0 && (
+                <div className="mt-4 border-t border-emerald-100/50 pt-12">
+                  <h3 className="text-center text-xl font-bold text-slate-700 mb-8">Pelaksana Kewilayahan (Kepala Dusun)</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 justify-center">
+                    {perangkat.filter(p => p.urutan_tampil >= 9).map((p) => (
+                      <div className="flex justify-center" key={p.id}>
+                        <div className="w-full max-w-[280px]"><PerangkatCard perangkat={p} /></div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
