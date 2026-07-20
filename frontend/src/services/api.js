@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:5001/api', // Backend running on port 5001
+    baseURL: import.meta.env.VITE_API_URL || '/api', // Support local dev with env, and fallback to relative path for production
 });
 
 // Interceptor untuk token JWT
