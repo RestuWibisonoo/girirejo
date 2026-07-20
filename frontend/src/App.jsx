@@ -6,6 +6,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 // Halaman Publik
 import HomePage from './pages/public/HomePage';
 import UMKMPage from './pages/public/UMKMPage';
+import UMKMDetailPage from './pages/public/UMKMDetailPage';
 import PublikasiPage from './pages/public/PublikasiPage';
 import PublikasiDetailPage from './pages/public/PublikasiDetailPage';
 
@@ -24,6 +25,7 @@ function App() {
         <Route element={<PublicLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/umkm" element={<UMKMPage />} />
+          <Route path="/umkm/:id" element={<UMKMDetailPage />} />
           <Route path="/publikasi" element={<PublikasiPage />} />
           <Route path="/publikasi/:slug" element={<PublikasiDetailPage />} />
         </Route>

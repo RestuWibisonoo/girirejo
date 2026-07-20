@@ -3,6 +3,7 @@ const router = express.Router();
 const perangkatController = require('../controllers/perangkatController');
 const authMiddleware = require('../middlewares/authMiddleware');
 const upload = require('../middlewares/uploadMiddleware');
+const resizeImage = require('../middlewares/resizeImageMiddleware');
 
 // Konfigurasi Multer untuk menerima 2 jenis foto
 const uploadFields = upload.fields([
@@ -14,8 +15,8 @@ const uploadFields = upload.fields([
 router.get('/', perangkatController.getAll);
 
 // Private: Hanya Admin yang bisa menambah, mengedit, dan menghapus
-router.post('/', authMiddleware, uploadFields, perangkatController.create);
-router.put('/:id', authMiddleware, uploadFields, perangkatController.update);
+router.post('/', authMiddleware, uploadFields, resizeImage, perangkatController.create);
+router.put('/:id', authMiddleware, uploadFields, resizeImage, perangkatController.update);
 router.delete('/:id', authMiddleware, perangkatController.delete);
 
 module.exports = router;
