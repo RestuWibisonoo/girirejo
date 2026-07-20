@@ -14,9 +14,9 @@ const processImage = async (file) => {
 
     try {
         await sharp(filePath)
-            .resize(800, 600, { // Rasio 4:3
-                fit: sharp.fit.cover,
-                position: sharp.strategy.entropy // Mempertahankan bagian penting dari gambar (smart crop)
+            .resize({ 
+                width: 800, // Batasi lebar maksimal 800px
+                withoutEnlargement: true // Jangan perbesar jika foto aslinya kecil, dan JANGAN potong (preserve aspect ratio)
             })
             .webp({ quality: 80 }) // Kompresi ke format webp agar lebih ringan
             .toFile(tempPath);
