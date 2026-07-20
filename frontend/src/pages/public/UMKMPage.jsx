@@ -98,7 +98,7 @@ const UMKMPage = () => {
           )}
 
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
               {[...Array(8)].map((_, i) => (
                 <div key={i} className="bg-white rounded-2xl overflow-hidden animate-pulse border border-stone-100">
                   <div className="aspect-[4/3] bg-stone-200" />
@@ -125,7 +125,7 @@ const UMKMPage = () => {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
               {filtered.map(u => (
                 <UMKMCard key={u.id} umkm={u} />
               ))}

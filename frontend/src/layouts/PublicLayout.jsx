@@ -15,7 +15,10 @@ const PublicLayout = () => {
     <div className="min-h-screen flex flex-col">
       <header className="bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300">
         <div className="flex justify-between items-center py-4 px-4 md:px-8 max-w-7xl mx-auto w-full">
-          <h1 className="text-2xl font-bold text-brand-primary">Girirejo</h1>
+          <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
+            <img src="/logo.png" alt="Logo Desa Girirejo" className="h-8 md:h-10 w-auto object-contain drop-shadow-sm" />
+            <h1 className="text-2xl font-bold text-brand-primary">Girirejo</h1>
+          </Link>
           
           {/* Desktop Nav */}
           <nav className="hidden md:flex space-x-8 items-center">

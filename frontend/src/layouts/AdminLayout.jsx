@@ -34,7 +34,10 @@ const AdminLayout = () => {
         isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
         <div className="p-6 border-b border-stone-100 flex items-center justify-between">
-          <h2 className="text-xl font-bold text-brand-primary">Admin Girirejo</h2>
+          <Link to="/admin" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
+            <img src="/logo.png" alt="Logo Girirejo" className="h-8 w-auto object-contain drop-shadow-sm" />
+            <h2 className="text-xl font-bold text-brand-primary hidden md:block lg:block">Admin</h2>
+          </Link>
           <button 
             className="md:hidden text-slate-400 hover:text-slate-600"
             onClick={() => setIsSidebarOpen(false)}

@@ -22,16 +22,32 @@ const StatCard = ({ label, value, icon }) => (
 );
 
 // --- Komponen Feature Card ---
-const FeatureCard = ({ icon, title, desc, link, linkLabel }) => (
-  <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-8 border border-stone-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group flex flex-col">
-    <div className="text-4xl mb-5">{icon}</div>
-    <h3 className="text-xl font-bold text-slate-800 mb-3">{title}</h3>
-    <p className="text-slate-500 leading-relaxed flex-grow">{desc}</p>
-    <Link to={link} className="mt-6 inline-flex items-center gap-2 text-brand-primary font-bold text-sm group-hover:text-brand-accent transition-colors">
-      {linkLabel} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-    </Link>
-  </div>
-);
+const FeatureCard = ({ icon, title, desc, link, linkLabel }) => {
+  const isAnchor = link.startsWith('#');
+  
+  const handleAnchorClick = (e) => {
+    e.preventDefault();
+    document.querySelector(link)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-8 border border-stone-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group flex flex-col">
+      <div className="text-4xl mb-5">{icon}</div>
+      <h3 className="text-xl font-bold text-slate-800 mb-3">{title}</h3>
+      <p className="text-slate-500 leading-relaxed flex-grow">{desc}</p>
+      
+      {isAnchor ? (
+        <a href={link} onClick={handleAnchorClick} className="mt-6 inline-flex items-center gap-2 text-brand-primary font-bold text-sm group-hover:text-brand-accent transition-colors cursor-pointer">
+          {linkLabel} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+        </a>
+      ) : (
+        <Link to={link} className="mt-6 inline-flex items-center gap-2 text-brand-primary font-bold text-sm group-hover:text-brand-accent transition-colors">
+          {linkLabel} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+        </Link>
+      )}
+    </div>
+  );
+};
 
 // --- Halaman Utama ---
 const HomePage = () => {
@@ -173,7 +189,7 @@ const HomePage = () => {
               icon="🧑‍🤝‍🧑"
               title="Struktur Perangkat Desa"
               desc="Kenali para perangkat desa Girirejo yang berdedikasi melayani masyarakat setiap hari."
-              link="/"
+              link="#perangkat-desa"
               linkLabel="Lihat Struktur"
             />
             <FeatureCard
@@ -195,7 +211,7 @@ const HomePage = () => {
       </section>
 
       {/* ===== PERANGKAT DESA SECTION ===== */}
-      <section className="py-16 md:py-24 px-4">
+      <section id="perangkat-desa" className="py-16 md:py-24 px-4 scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 md:mb-16">
             <div className="inline-block bg-emerald-100 text-brand-primary text-sm font-bold px-4 py-2 rounded-full mb-5">

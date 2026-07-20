@@ -62,26 +62,26 @@ const PublikasiCard = ({ item }) => {
       )}
 
       {/* Konten */}
-      <div className="p-6 flex flex-col flex-grow">
+      <div className="p-4 md:p-6 flex flex-col flex-grow">
         {/* Badge & Tanggal */}
-        <div className="flex items-center justify-between mb-4">
-          <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full border ${config.color} ${config.border}`}>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:justify-between mb-3 md:mb-4">
+          <span className={`inline-flex items-center gap-1 text-[10px] sm:text-xs font-bold px-2 py-1 md:px-3 md:py-1.5 rounded-full border w-fit ${config.color} ${config.border}`}>
             {config.icon} {config.label}
           </span>
-          <span className="flex items-center gap-1.5 text-xs text-slate-400 font-medium">
+          <span className="flex items-center gap-1 text-[10px] sm:text-xs text-slate-400 font-medium">
             <Calendar size={12} />
             {formatDate(item.tanggal || item.created_at)}
           </span>
         </div>
 
         {/* Judul */}
-        <h3 className="font-extrabold text-slate-800 text-lg mb-3 leading-snug flex-grow">
+        <h3 className="font-extrabold text-slate-800 text-sm md:text-lg mb-2 md:mb-3 leading-snug flex-grow line-clamp-3">
           {item.judul}
         </h3>
 
         {/* Ringkasan/Isi */}
         {item.ringkasan && (
-          <p className="text-slate-500 text-sm leading-relaxed line-clamp-3 mb-4">
+          <p className="text-slate-500 text-xs md:text-sm leading-relaxed line-clamp-2 md:line-clamp-3 mb-4">
             {item.ringkasan}
           </p>
         )}
@@ -92,10 +92,10 @@ const PublikasiCard = ({ item }) => {
             href={pdfUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-auto inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-50 border border-emerald-200 text-brand-primary text-sm font-bold rounded-xl hover:bg-emerald-100 hover:-translate-y-0.5 transition-all w-fit"
+            className="mt-auto inline-flex items-center gap-1.5 md:gap-2 px-3 py-2 md:px-4 md:py-2.5 bg-emerald-50 border border-emerald-200 text-brand-primary text-[11px] md:text-sm font-bold rounded-xl hover:bg-emerald-100 hover:-translate-y-0.5 transition-all w-fit"
           >
-            <FileText size={15} /> Buka Dokumen PDF
-            <ExternalLink size={13} />
+            <FileText size={14} className="hidden sm:block" /> Buka PDF
+            <ExternalLink size={12} />
           </a>
         )}
       </div>
@@ -195,7 +195,7 @@ const PublikasiPage = () => {
           )}
 
           {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
               {[...Array(6)].map((_, i) => (
                 <div key={i} className="bg-white rounded-2xl overflow-hidden animate-pulse border border-stone-100">
                   <div className="aspect-video bg-stone-200" />
@@ -223,7 +223,7 @@ const PublikasiPage = () => {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
               {filtered.map(item => (
                 <PublikasiCard key={item.id} item={item} />
               ))}

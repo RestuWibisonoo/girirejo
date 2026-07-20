@@ -52,19 +52,19 @@ const UMKMCard = ({ umkm }) => {
         )}
 
         {/* Tombol Aksi */}
-        <div className="mt-5 grid grid-cols-2 gap-3">
+        <div className="mt-4 grid grid-cols-1 xl:grid-cols-2 gap-2">
           {waLink ? (
             <a
               href={waLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-3 py-2.5 bg-brand-accent text-white text-sm font-bold rounded-xl hover:bg-orange-600 hover:-translate-y-0.5 shadow-md hover:shadow-lg transition-all"
+              className="flex items-center justify-center gap-1.5 p-2 bg-brand-accent text-white text-[11px] sm:text-xs font-bold rounded-xl hover:bg-orange-600 hover:-translate-y-0.5 shadow-md hover:shadow-lg transition-all"
             >
-              <MessageCircle size={16} /> Beli via WA
+              <MessageCircle size={14} /> Beli via WA
             </a>
           ) : (
-            <button disabled className="flex items-center justify-center gap-2 px-3 py-2.5 bg-stone-100 text-slate-400 text-sm font-medium rounded-xl cursor-not-allowed">
-              <MessageCircle size={16} /> Tidak Ada WA
+            <button disabled className="flex items-center justify-center gap-1.5 p-2 bg-stone-100 text-slate-400 text-[11px] sm:text-xs font-medium rounded-xl cursor-not-allowed">
+              <MessageCircle size={14} /> Tidak Ada WA
             </button>
           )}
 
@@ -73,13 +73,13 @@ const UMKMCard = ({ umkm }) => {
               href={mapsLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-3 py-2.5 bg-emerald-50 text-brand-primary border border-emerald-200 text-sm font-bold rounded-xl hover:bg-emerald-100 hover:-translate-y-0.5 transition-all"
+              className="flex items-center justify-center gap-1.5 p-2 bg-emerald-50 text-brand-primary border border-emerald-200 text-[11px] sm:text-xs font-bold rounded-xl hover:bg-emerald-100 hover:-translate-y-0.5 transition-all"
             >
-              <MapPin size={16} /> Google Maps
+              <MapPin size={14} /> Google Maps
             </a>
           ) : (
-            <button disabled className="flex items-center justify-center gap-2 px-3 py-2.5 bg-stone-100 text-slate-400 text-sm font-medium rounded-xl cursor-not-allowed">
-              <MapPin size={16} /> Tanpa Lokasi
+            <button disabled className="flex items-center justify-center gap-1.5 p-2 bg-stone-100 text-slate-400 text-[11px] sm:text-xs font-medium rounded-xl cursor-not-allowed">
+              <MapPin size={14} /> Tanpa Lokasi
             </button>
           )}
         </div>
