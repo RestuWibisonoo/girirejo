@@ -10,6 +10,7 @@ const PublikasiModal = ({ isOpen, onClose, onSuccess, initialData }) => {
     jenis: 'Berita',
     ringkasan: '',
     tanggal: new Date().toISOString().split('T')[0],
+    tags: '',
   });
   const [thumbnail, setThumbnail] = useState(null);
   const [filePdf, setFilePdf] = useState(null);
@@ -25,6 +26,7 @@ const PublikasiModal = ({ isOpen, onClose, onSuccess, initialData }) => {
         tanggal: initialData.tanggal
           ? new Date(initialData.tanggal).toISOString().split('T')[0]
           : new Date().toISOString().split('T')[0],
+        tags: initialData.tags || '',
       });
     } else {
       setFormData({
@@ -32,6 +34,7 @@ const PublikasiModal = ({ isOpen, onClose, onSuccess, initialData }) => {
         jenis: 'Berita',
         ringkasan: '',
         tanggal: new Date().toISOString().split('T')[0],
+        tags: '',
       });
     }
     setThumbnail(null);
@@ -52,6 +55,7 @@ const PublikasiModal = ({ isOpen, onClose, onSuccess, initialData }) => {
     data.append('judul', formData.judul);
     data.append('tipe', formData.jenis.toLowerCase());
     data.append('konten', formData.ringkasan);
+    data.append('tags', formData.tags);
     if (thumbnail) data.append('gambar', thumbnail);
     if (filePdf) data.append('lampiran', filePdf);
 
@@ -159,6 +163,21 @@ const PublikasiModal = ({ isOpen, onClose, onSuccess, initialData }) => {
                 className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary transition-all text-sm resize-none"
                 placeholder="Tuliskan ringkasan atau isi dari publikasi ini..."
                 value={formData.ringkasan}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* Tags */}
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Tags <span className="text-slate-400 font-normal text-xs">(pisahkan dengan koma)</span>
+              </label>
+              <input
+                type="text"
+                name="tags"
+                className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary transition-all text-sm"
+                placeholder="Cth: Pembangunan, Dana Desa, 2026"
+                value={formData.tags}
                 onChange={handleChange}
               />
             </div>

@@ -7,6 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import HomePage from './pages/public/HomePage';
 import UMKMPage from './pages/public/UMKMPage';
 import PublikasiPage from './pages/public/PublikasiPage';
+import PublikasiDetailPage from './pages/public/PublikasiDetailPage';
 
 // Halaman Admin
 import Login from './pages/admin/Login';
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/umkm" element={<UMKMPage />} />
           <Route path="/publikasi" element={<PublikasiPage />} />
+          <Route path="/publikasi/:slug" element={<PublikasiDetailPage />} />
         </Route>
 
         {/* Rute Autentikasi Admin */}

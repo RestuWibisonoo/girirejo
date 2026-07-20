@@ -41,28 +41,34 @@ const PublikasiModel = {
     },
 
     create: async (data) => {
-        const { tipe, judul, slug, konten, foto_url, lampiran_url, author_id, tanggal_publikasi } = data;
+        const { tipe, judul, slug, konten, foto_url, lampiran_url, author_id, tanggal_publikasi, tags } = data;
         const query = `
-            INSERT INTO publikasi (tipe, judul, slug, konten, foto_url, lampiran_url, author_id, tanggal_publikasi)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO publikasi (tipe, judul, slug, konten, foto_url, lampiran_url, author_id, tanggal_publikasi, tags)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
-        const [result] = await db.query(query, [tipe, judul, slug, konten, foto_url, lampiran_url, author_id, tanggal_publikasi]);
+        const [result] = await db.query(query, [tipe, judul, slug, konten, foto_url, lampiran_url, author_id, tanggal_publikasi, tags]);
         return result.insertId;
     },
 
     update: async (id, data) => {
-        const { tipe, judul, slug, konten, foto_url, lampiran_url, tanggal_publikasi } = data;
+        const { tipe, judul, slug, konten, foto_url, lampiran_url, tanggal_publikasi, tags } = data;
         const query = `
             UPDATE publikasi 
-            SET tipe = ?, judul = ?, slug = ?, konten = ?, foto_url = ?, lampiran_url = ?, tanggal_publikasi = ?
+            SET tipe = ?, judul = ?, slug = ?, konten = ?, foto_url = ?, lampiran_url = ?, tanggal_publikasi = ?, tags = ?
             WHERE id = ?
         `;
-        const [result] = await db.query(query, [tipe, judul, slug, konten, foto_url, lampiran_url, tanggal_publikasi, id]);
+        const [result] = await db.query(query, [tipe, judul, slug, konten, foto_url, lampiran_url, tanggal_publikasi, tags, id]);
         return result.affectedRows;
     },
 
     delete: async (id) => {
         const query = 'DELETE FROM publikasi WHERE id = ?';
+        const [result] = await db.query(query, [id]);
+        return result.affectedRows;
+    },
+
+    incrementViews: async (id) => {
+        const query = 'UPDATE publikasi SET views_count = views_count + 1 WHERE id = ?';
         const [result] = await db.query(query, [id]);
         return result.affectedRows;
     }

@@ -38,6 +38,12 @@ const publikasiController = {
             const { idOrSlug } = req.params;
             const data = await PublikasiModel.getBySlugOrId(idOrSlug);
             if (!data) return res.status(404).json({ status: "error", message: "Publikasi tidak ditemukan." });
+            
+            // Increment views
+            await PublikasiModel.incrementViews(data.id);
+            // Tambahkan views ke data yang dikirim karena increment baru terjadi di DB setelah get
+            data.views_count = (data.views_count || 0) + 1;
+
             return res.json({ status: "success", message: "Berhasil mengambil detail publikasi.", data });
         } catch (error) {
             console.error("GetDetail Publikasi Error:", error);
@@ -47,7 +53,7 @@ const publikasiController = {
 
     create: async (req, res) => {
         try {
-            const { tipe, judul, konten } = req.body;
+            const { tipe, judul, konten, tags } = req.body;
             
             if (!tipe || !judul || !konten) {
                 return res.status(400).json({ status: "error", message: "Field tipe, judul, dan konten wajib diisi." });
@@ -80,7 +86,7 @@ const publikasiController = {
             const tanggal_publikasi = new Date().toISOString().split('T')[0];
 
             const newId = await PublikasiModel.create({
-                tipe, judul, slug, konten, foto_url, lampiran_url, author_id, tanggal_publikasi
+                tipe, judul, slug, konten, foto_url, lampiran_url, author_id, tanggal_publikasi, tags
             });
 
             return res.status(201).json({ 
@@ -102,7 +108,7 @@ const publikasiController = {
                 return res.status(404).json({ status: "error", message: "Publikasi tidak ditemukan." });
             }
 
-            const { tipe, judul, konten } = req.body;
+            const { tipe, judul, konten, tags } = req.body;
 
             // Jika judul berubah, perbarui slug-nya
             const slug = judul ? (generateSlug(judul) + '-' + existingData.id) : existingData.slug;
@@ -128,7 +134,8 @@ const publikasiController = {
                 konten: konten || existingData.konten,
                 foto_url,
                 lampiran_url,
-                tanggal_publikasi: existingData.tanggal_publikasi
+                tanggal_publikasi: existingData.tanggal_publikasi,
+                tags: tags !== undefined ? tags : existingData.tags
             });
 
             return res.json({ status: "success", message: "Publikasi berhasil diperbarui.", data: { slug } });

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../../services/api';
-import { BookOpen, Calendar, Tag, FileText, ExternalLink, Newspaper, Award, Users } from 'lucide-react';
+import { BookOpen, Calendar, Tag, FileText, ExternalLink, Newspaper, Award, Users, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const UPLOAD_BASE = 'http://localhost:5001/uploads';
 
@@ -27,6 +28,22 @@ const JENIS_CONFIG = {
 
 const FILTER_OPTIONS = ['Semua', 'Berita', 'Kegiatan', 'Akuntabilitas'];
 
+const MONTHS = [
+  { value: 'Semua', label: 'Semua Bulan' },
+  { value: '01', label: 'Januari' },
+  { value: '02', label: 'Februari' },
+  { value: '03', label: 'Maret' },
+  { value: '04', label: 'April' },
+  { value: '05', label: 'Mei' },
+  { value: '06', label: 'Juni' },
+  { value: '07', label: 'Juli' },
+  { value: '08', label: 'Agustus' },
+  { value: '09', label: 'September' },
+  { value: '10', label: 'Oktober' },
+  { value: '11', label: 'November' },
+  { value: '12', label: 'Desember' },
+];
+
 // Format tanggal Indonesia
 const formatDate = (dateString) => {
   if (!dateString) return '-';
@@ -46,59 +63,68 @@ const PublikasiCard = ({ item }) => {
 
   return (
     <article className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-stone-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group">
-      {/* Thumbnail */}
-      {thumbnailUrl ? (
-        <div className="overflow-hidden aspect-video bg-stone-100">
-          <img
-            src={thumbnailUrl}
-            alt={item.judul}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-        </div>
-      ) : (
-        <div className="aspect-video bg-gradient-to-br from-stone-100 to-stone-200 flex items-center justify-center">
-          <BookOpen size={40} className="text-stone-300" />
-        </div>
-      )}
-
-      {/* Konten */}
-      <div className="p-4 md:p-6 flex flex-col flex-grow">
-        {/* Badge & Tanggal */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:justify-between mb-3 md:mb-4">
-          <span className={`inline-flex items-center gap-1 text-[10px] sm:text-xs font-bold px-2 py-1 md:px-3 md:py-1.5 rounded-full border w-fit ${config.color} ${config.border}`}>
-            {config.icon} {config.label}
-          </span>
-          <span className="flex items-center gap-1 text-[10px] sm:text-xs text-slate-400 font-medium">
-            <Calendar size={12} />
-            {formatDate(item.tanggal || item.created_at)}
-          </span>
-        </div>
-
-        {/* Judul */}
-        <h3 className="font-extrabold text-slate-800 text-sm md:text-lg mb-2 md:mb-3 leading-snug flex-grow line-clamp-3">
-          {item.judul}
-        </h3>
-
-        {/* Ringkasan/Isi */}
-        {item.ringkasan && (
-          <p className="text-slate-500 text-xs md:text-sm leading-relaxed line-clamp-2 md:line-clamp-3 mb-4">
-            {item.ringkasan}
-          </p>
+      <Link to={`/publikasi/${item.slug || item.id}`} className="flex flex-col flex-grow">
+        {/* Thumbnail */}
+        {thumbnailUrl ? (
+          <div className="overflow-hidden aspect-video bg-stone-100">
+            <img
+              src={thumbnailUrl}
+              alt={item.judul}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+        ) : (
+          <div className="aspect-video bg-gradient-to-br from-stone-100 to-stone-200 flex items-center justify-center">
+            <BookOpen size={40} className="text-stone-300" />
+          </div>
         )}
 
-        {/* Tombol Aksi PDF */}
-        {pdfUrl && (
+        {/* Konten */}
+        <div className="p-4 md:p-6 flex flex-col flex-grow">
+          {/* Badge & Tanggal */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:justify-between mb-3 md:mb-4">
+            <span className={`inline-flex items-center gap-1 text-[10px] sm:text-xs font-bold px-2 py-1 md:px-3 md:py-1.5 rounded-full border w-fit ${config.color} ${config.border}`}>
+              {config.icon} {config.label}
+            </span>
+            <span className="flex items-center gap-1 text-[10px] sm:text-xs text-slate-400 font-medium">
+              <Calendar size={12} />
+              {formatDate(item.tanggal || item.created_at)}
+            </span>
+          </div>
+
+          {/* Judul */}
+          <h3 className="font-extrabold text-slate-800 text-sm md:text-lg mb-2 md:mb-3 leading-snug flex-grow line-clamp-3 group-hover:text-brand-primary transition-colors">
+            {item.judul}
+          </h3>
+
+          {/* Ringkasan/Isi */}
+          {item.ringkasan && (
+            <p className="text-slate-500 text-xs md:text-sm leading-relaxed line-clamp-2 md:line-clamp-3 mb-4">
+              {item.ringkasan}
+            </p>
+          )}
+
+          {/* Tombol Aksi PDF - we should stop propagation here so clicking the link doesn't trigger the card link or we handle it otherwise. Actually, putting an <a> inside <Link> is invalid HTML.
+          Let's pull the PDF link out, or make the card a div with onClick, or put the Link only on the image and title.
+          Instead of putting a Link wrapping the entire card including the PDF a tag, let's wrap just the image and title. */}
+        </div>
+      </Link>
+      
+      {/* Tombol Aksi PDF - Outside the Link */}
+      {pdfUrl && (
+        <div className="px-4 md:px-6 pb-4 md:pb-6 mt-auto">
           <a
             href={pdfUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-auto inline-flex items-center gap-1.5 md:gap-2 px-3 py-2 md:px-4 md:py-2.5 bg-emerald-50 border border-emerald-200 text-brand-primary text-[11px] md:text-sm font-bold rounded-xl hover:bg-emerald-100 hover:-translate-y-0.5 transition-all w-fit"
+            onClick={(e) => e.stopPropagation()}
+            className="inline-flex items-center gap-1.5 md:gap-2 px-3 py-2 md:px-4 md:py-2.5 bg-emerald-50 border border-emerald-200 text-brand-primary text-[11px] md:text-sm font-bold rounded-xl hover:bg-emerald-100 hover:-translate-y-0.5 transition-all w-fit"
           >
             <FileText size={14} className="hidden sm:block" /> Buka PDF
             <ExternalLink size={12} />
           </a>
-        )}
-      </div>
+        </div>
+      )}
     </article>
   );
 };
@@ -107,6 +133,34 @@ const PublikasiPage = () => {
   const [publikasiList, setPublikasiList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('Semua');
+  const [selectedMonth, setSelectedMonth] = useState('Semua');
+  const [selectedYear, setSelectedYear] = useState('Semua');
+  
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(9); // Default 9 for desktop
+
+  // Handle Resize for itemsPerPage
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setItemsPerPage(8); // Mobile
+      } else {
+        setItemsPerPage(9); // Desktop
+      }
+    };
+    
+    // Initial check
+    handleResize();
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Reset page when filter changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeFilter, selectedMonth, selectedYear]);
 
   useEffect(() => {
     api.get('/publikasi')
@@ -125,9 +179,51 @@ const PublikasiPage = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  const filtered = activeFilter === 'Semua'
-    ? publikasiList
-    : publikasiList.filter(p => p.jenis === activeFilter);
+  const filtered = publikasiList.filter(p => {
+    const isTipeMatch = activeFilter === 'Semua' || p.jenis === activeFilter;
+    
+    // Parse tanggal untuk filter
+    const dateObj = new Date(p.tanggal || p.created_at);
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const year = String(dateObj.getFullYear());
+
+    const isMonthMatch = selectedMonth === 'Semua' || month === selectedMonth;
+    const isYearMatch = selectedYear === 'Semua' || year === selectedYear;
+
+    return isTipeMatch && isMonthMatch && isYearMatch;
+  });
+
+  // Dapatkan daftar tahun unik dari publikasi yang ada
+  const availableYears = ['Semua', ...new Set(publikasiList.map(p => {
+    const d = new Date(p.tanggal || p.created_at);
+    return String(d.getFullYear());
+  }))].sort((a, b) => b.localeCompare(a)); // Urutkan tahun terbaru di atas
+
+  // Pagination Logic
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const currentItems = filtered.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(prev => prev - 1);
+      window.scrollTo({ top: 400, behavior: 'smooth' }); // Scroll ke atas list
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(prev => prev + 1);
+      window.scrollTo({ top: 400, behavior: 'smooth' }); // Scroll ke atas list
+    }
+  };
+
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 400, behavior: 'smooth' });
+  };
 
   return (
     <div className="bg-stone-50 min-h-screen">
@@ -158,24 +254,52 @@ const PublikasiPage = () => {
 
       {/* ===== FILTER SECTION ===== */}
       <section className="sticky top-[73px] z-30 bg-white/80 backdrop-blur-md border-b border-stone-200 shadow-sm py-4 px-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-center gap-3 flex-wrap">
-          {FILTER_OPTIONS.map(f => (
-            <button
-              key={f}
-              onClick={() => setActiveFilter(f)}
-              className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all ${
-                activeFilter === f
-                  ? 'bg-slate-800 text-white shadow-md scale-105'
-                  : 'bg-stone-100 text-slate-600 hover:bg-stone-200'
-              }`}
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          
+          {/* Tipe Filter */}
+          <div className="flex items-center justify-center md:justify-start gap-2 flex-wrap">
+            {FILTER_OPTIONS.map(f => (
+              <button
+                key={f}
+                onClick={() => setActiveFilter(f)}
+                className={`px-4 py-2 rounded-xl text-xs md:text-sm font-bold transition-all ${
+                  activeFilter === f
+                    ? 'bg-slate-800 text-white shadow-md scale-105'
+                    : 'bg-stone-100 text-slate-600 hover:bg-stone-200'
+                }`}
+              >
+                {f === 'Semua' && '📋 '}
+                {f === 'Berita' && '📰 '}
+                {f === 'Kegiatan' && '🤝 '}
+                {f === 'Akuntabilitas' && '📊 '}
+                {f}
+              </button>
+            ))}
+          </div>
+
+          {/* Waktu Filter */}
+          <div className="flex items-center gap-2">
+            <select
+              value={selectedMonth}
+              onChange={(e) => setSelectedMonth(e.target.value)}
+              className="bg-stone-100 border border-stone-200 text-slate-700 text-xs md:text-sm rounded-xl focus:ring-brand-primary focus:border-brand-primary block p-2.5 outline-none font-medium cursor-pointer"
             >
-              {f === 'Semua' && '📋 '}
-              {f === 'Berita' && '📰 '}
-              {f === 'Kegiatan' && '🤝 '}
-              {f === 'Akuntabilitas' && '📊 '}
-              {f}
-            </button>
-          ))}
+              {MONTHS.map(m => (
+                <option key={m.value} value={m.value}>{m.label}</option>
+              ))}
+            </select>
+            
+            <select
+              value={selectedYear}
+              onChange={(e) => setSelectedYear(e.target.value)}
+              className="bg-stone-100 border border-stone-200 text-slate-700 text-xs md:text-sm rounded-xl focus:ring-brand-primary focus:border-brand-primary block p-2.5 outline-none font-medium cursor-pointer"
+            >
+              {availableYears.map(y => (
+                <option key={y} value={y}>{y === 'Semua' ? 'Semua Tahun' : y}</option>
+              ))}
+            </select>
+          </div>
+
         </div>
       </section>
 
@@ -223,11 +347,70 @@ const PublikasiPage = () => {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-              {filtered.map(item => (
-                <PublikasiCard key={item.id} item={item} />
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-12">
+                {currentItems.map(item => (
+                  <PublikasiCard key={item.id} item={item} />
+                ))}
+              </div>
+
+              {/* Pagination Controls */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-2 mt-8">
+                  <button 
+                    onClick={handlePrevPage}
+                    disabled={currentPage === 1}
+                    className="p-2 rounded-xl border border-stone-200 bg-white text-slate-600 hover:bg-stone-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  
+                  <div className="flex items-center gap-1">
+                    {[...Array(totalPages)].map((_, i) => {
+                      const pageNum = i + 1;
+                      // Simple pagination display: Show first, last, current, and adjacent
+                      if (
+                        pageNum === 1 ||
+                        pageNum === totalPages ||
+                        (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)
+                      ) {
+                        return (
+                          <button
+                            key={pageNum}
+                            onClick={() => handlePageClick(pageNum)}
+                            className={`w-10 h-10 flex items-center justify-center rounded-xl font-bold text-sm transition-all ${
+                              currentPage === pageNum
+                                ? 'bg-brand-primary text-white shadow-md'
+                                : 'bg-white border border-stone-200 text-slate-600 hover:bg-stone-50'
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        );
+                      }
+                      
+                      // Show dots for gaps
+                      if (
+                        (pageNum === 2 && currentPage > 3) ||
+                        (pageNum === totalPages - 1 && currentPage < totalPages - 2)
+                      ) {
+                        return <span key={pageNum} className="px-1 text-slate-400">...</span>;
+                      }
+                      
+                      return null;
+                    })}
+                  </div>
+
+                  <button 
+                    onClick={handleNextPage}
+                    disabled={currentPage === totalPages}
+                    className="p-2 rounded-xl border border-stone-200 bg-white text-slate-600 hover:bg-stone-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>
