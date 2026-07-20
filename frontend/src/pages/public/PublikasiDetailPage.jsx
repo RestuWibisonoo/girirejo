@@ -7,7 +7,7 @@ import {
   Eye, Clock, Share2, MessageCircle, Link as LinkIcon, Tag
 } from 'lucide-react';
 
-const UPLOAD_BASE = 'http://localhost:5001/uploads';
+const UPLOAD_BASE = import.meta.env.VITE_UPLOAD_URL || '/uploads';
 
 const JENIS_CONFIG = {
   'berita': {

@@ -3,7 +3,7 @@ import api from '../../services/api';
 import UMKMModal from '../../components/admin/UMKMModal';
 import { Plus, Edit2, Trash2, MessageCircle, MapPin, Store, Search } from 'lucide-react';
 
-const UPLOAD_BASE = 'http://localhost:5001/uploads';
+const UPLOAD_BASE = import.meta.env.VITE_UPLOAD_URL || '/uploads';
 
 const CATEGORY_COLORS = {
   'Makanan': 'bg-orange-100 text-orange-700',

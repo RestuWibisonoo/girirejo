@@ -3,7 +3,7 @@ import api from '../../services/api';
 import PublikasiModal from '../../components/admin/PublikasiModal';
 import { Plus, Edit2, Trash2, FileText, Newspaper, Users, Award, Calendar, ExternalLink } from 'lucide-react';
 
-const UPLOAD_BASE = 'http://localhost:5001/uploads';
+const UPLOAD_BASE = import.meta.env.VITE_UPLOAD_URL || '/uploads';
 
 const JENIS_CONFIG = {
   'Berita': { color: 'bg-indigo-100 text-indigo-700', icon: <Newspaper size={12} /> },

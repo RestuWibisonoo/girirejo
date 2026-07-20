@@ -3,11 +3,11 @@ import React from 'react';
 const PerangkatCard = ({ perangkat }) => {
   // Gunakan placeholder foto jika tidak ada dari database
   const fotoAwal = perangkat.foto_awal_url 
-    ? `http://localhost:5001/uploads/${perangkat.foto_awal_url}` 
+    ? `${import.meta.env.VITE_UPLOAD_URL || '/uploads'}/${perangkat.foto_awal_url}` 
     : 'https://placehold.co/400x500/e2e8f0/475569?text=Foto+Formal';
     
   const fotoHover = perangkat.foto_hover_url 
-    ? `http://localhost:5001/uploads/${perangkat.foto_hover_url}` 
+    ? `${import.meta.env.VITE_UPLOAD_URL || '/uploads'}/${perangkat.foto_hover_url}` 
     : 'https://placehold.co/400x500/047857/ffffff?text=Foto+Bebas';
 
   return (

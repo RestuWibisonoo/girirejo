@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import { BookOpen, Calendar, Tag, FileText, ExternalLink, Newspaper, Award, Users, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const UPLOAD_BASE = 'http://localhost:5001/uploads';
+const UPLOAD_BASE = import.meta.env.VITE_UPLOAD_URL || '/uploads';
 
 const JENIS_CONFIG = {
   'Berita': {

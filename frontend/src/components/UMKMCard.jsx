@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle, MapPin, Tag, ExternalLink } from 'lucide-react';
 
-const UPLOAD_BASE = 'http://localhost:5001/uploads';
+const UPLOAD_BASE = import.meta.env.VITE_UPLOAD_URL || '/uploads';
 
 // Palet warna per kategori
 const CATEGORY_COLORS = {

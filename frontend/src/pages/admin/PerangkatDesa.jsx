@@ -99,7 +99,7 @@ const PerangkatDesa = () => {
                           <td className="p-5">
                             <div className="w-14 h-14 rounded-xl bg-stone-200 overflow-hidden shadow-sm border border-stone-200">
                               {item.foto_awal_url ? (
-                                <img src={`http://localhost:5001/uploads/${item.foto_awal_url}`} alt="Formal" className="w-full h-full object-cover" />
+                                <img src={`${import.meta.env.VITE_UPLOAD_URL || '/uploads'}/${item.foto_awal_url}`} alt="Formal" className="w-full h-full object-cover" />
                               ) : (
                                 <span className="flex items-center justify-center w-full h-full text-[10px] text-slate-400">Kosong</span>
                               )}
@@ -108,7 +108,7 @@ const PerangkatDesa = () => {
                           <td className="p-5">
                             <div className="w-14 h-14 rounded-xl bg-stone-200 overflow-hidden shadow-sm border-2 border-brand-accent/20">
                               {item.foto_hover_url ? (
-                                <img src={`http://localhost:5001/uploads/${item.foto_hover_url}`} alt="Hover" className="w-full h-full object-cover" />
+                                <img src={`${import.meta.env.VITE_UPLOAD_URL || '/uploads'}/${item.foto_hover_url}`} alt="Hover" className="w-full h-full object-cover" />
                               ) : (
                                 <span className="flex items-center justify-center w-full h-full text-[10px] text-slate-400">Kosong</span>
                               )}
