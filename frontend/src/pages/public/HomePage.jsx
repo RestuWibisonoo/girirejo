@@ -61,39 +61,32 @@ const HomePage = () => {
       .catch(() => setPerangkat([]))
       .finally(() => setLoading(false));
 
-    // Animasi GSAP Hero Section
+    // Animasi GSAP Hero Section bergaya Premium (Karamel.id style)
     const tl = gsap.timeline({ delay: 0.2 });
     
-    tl.to('.hero-text-welcome', {
-      opacity: 1,
+    tl.to('.hero-text-line', {
       y: 0,
-      duration: 1,
-      ease: "power3.out",
-      startAt: { y: 30, opacity: 0 }
+      opacity: 1,
+      duration: 1.5,
+      stagger: 0.15,
+      ease: "power4.out",
+      startAt: { y: "100%", opacity: 0 }
     })
-    .to('.hero-char', {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      stagger: 0.05,
-      ease: "back.out(1.7)",
-      startAt: { y: 40, opacity: 0 }
-    }, "-=0.6")
     .to('.hero-desc', {
-      opacity: 1,
       y: 0,
-      duration: 1,
-      ease: "power3.out",
-      startAt: { y: 20, opacity: 0 }
-    }, "-=0.4")
+      opacity: 1,
+      duration: 1.5,
+      ease: "power4.out",
+      startAt: { y: "100%", opacity: 0 }
+    }, "-=1.1")
     .to('.hero-btn', {
-      opacity: 1,
       y: 0,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: "power2.out",
-      startAt: { y: 20, opacity: 0 }
-    }, "-=0.6");
+      opacity: 1,
+      duration: 1,
+      stagger: 0.15,
+      ease: "expo.out",
+      startAt: { y: 30, opacity: 0 }
+    }, "-=1.2");
   }, []);
 
   return (
@@ -115,23 +108,22 @@ const HomePage = () => {
           </div>
 
           {/* Heading */}
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white mb-6 leading-tight tracking-tight">
-            <span className="hero-text-welcome inline-block opacity-0">Selamat Datang di</span>{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-200 inline-block pb-2">
-              {"Desa Girirejo".split(" ").map((word, wordIndex) => (
-                <span key={wordIndex} className="inline-block whitespace-nowrap mr-3 md:mr-5 last:mr-0">
-                  {word.split("").map((char, charIndex) => (
-                    <span key={charIndex} className="inline-block opacity-0 hero-char">
-                      {char}
-                    </span>
-                  ))}
-                </span>
-              ))}
-            </span>
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white mb-6 leading-tight tracking-tight flex flex-col items-center">
+            <div className="overflow-hidden pb-1 md:pb-2">
+              <div className="hero-text-line">Selamat Datang di</div>
+            </div>
+            <div className="overflow-hidden pb-3 md:pb-4 mt-1 md:mt-2">
+              <div className="hero-text-line text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-200">
+                Desa Girirejo
+              </div>
+            </div>
           </h1>
-          <p className="hero-desc opacity-0 text-xl text-emerald-100 max-w-2xl mx-auto mb-12 leading-relaxed">
-            Bersama membangun desa yang mandiri, transparan, dan sejahtera untuk seluruh warga Girirejo.
-          </p>
+          
+          <div className="overflow-hidden max-w-2xl mx-auto mb-12">
+            <p className="hero-desc text-xl text-emerald-100 leading-relaxed">
+              Bersama membangun desa yang mandiri, transparan, dan sejahtera untuk seluruh warga Girirejo.
+            </p>
+          </div>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
