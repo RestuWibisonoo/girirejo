@@ -4,7 +4,7 @@ const visitorController = {
   record: async (req, res) => {
     try {
       // Dapatkan IP dari header proxy (jika dibalik nginx) atau req.ip
-      const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || req.ip;
+      const ip = req.headers['x-forwarded-for'] || req.socket?.remoteAddress || req.ip || '127.0.0.1';
       // Ambil IP pertama jika berupa list (karena proxy berantai)
       const clientIp = ip.split(',')[0].trim();
       

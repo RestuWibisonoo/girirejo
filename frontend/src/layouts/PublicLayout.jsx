@@ -20,17 +20,18 @@ const PublicLayout = () => {
   });
 
   React.useEffect(() => {
-    // Record visit (silent fail if any)
-    api.post('/visitors').catch(() => {});
-
-    // Get visitor stats
-    api.get('/visitors/stats')
-      .then(res => {
-        if (res.data && res.data.success) {
-          setVisitorStats(res.data.data);
-        }
-      })
-      .catch(() => {});
+    // Record visit first, THEN get stats to avoid race conditions
+    api.post('/visitors')
+      .catch(() => {}) // Silent fail if API down
+      .finally(() => {
+        api.get('/visitors/stats')
+          .then(res => {
+            if (res.data && res.data.success) {
+              setVisitorStats(res.data.data);
+            }
+          })
+          .catch(() => {});
+      });
   }, []);
 
   return (
