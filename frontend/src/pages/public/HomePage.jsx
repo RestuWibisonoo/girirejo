@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Users, Store, BookOpen, MapPin, ChevronDown } from 'lucide-react';
 import api from '../../services/api';
 import PerangkatCard from '../../components/PerangkatCard';
+import logoUrl from '../../assets/react.svg';
 
 // --- Data Statis Infografis ---
 const stats = [
@@ -55,44 +56,129 @@ const HomePage = () => {
   const [perangkat, setPerangkat] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [showIntro, setShowIntro] = useState(() => !sessionStorage.getItem('introPlayed'));
+
   useEffect(() => {
     api.get('/perangkat-desa')
       .then(res => setPerangkat(res.data.data || []))
       .catch(() => setPerangkat([]))
       .finally(() => setLoading(false));
 
-    // Animasi GSAP Hero Section bergaya Premium (Karamel.id style)
-    const tl = gsap.timeline({ delay: 0.2 });
-    
-    tl.to('.hero-text-line', {
-      y: 0,
-      opacity: 1,
-      duration: 1.5,
-      stagger: 0.15,
-      ease: "power4.out",
-      startAt: { y: "100%", opacity: 0 }
-    })
-    .to('.hero-desc', {
-      y: 0,
-      opacity: 1,
-      duration: 1.5,
-      ease: "power4.out",
-      startAt: { y: "100%", opacity: 0 }
-    }, "-=1.1")
-    .to('.hero-btn', {
-      y: 0,
-      opacity: 1,
-      duration: 1,
-      stagger: 0.15,
-      ease: "expo.out",
-      startAt: { y: 30, opacity: 0 }
-    }, "-=1.2");
-  }, []);
+    if (showIntro) {
+      sessionStorage.setItem('introPlayed', 'true');
+      document.body.style.overflow = 'hidden';
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          document.body.style.overflow = 'auto';
+          setShowIntro(false);
+        }
+      });
+
+      // Phase 1: Reveal Intro
+      tl.to('.intro-logo', { scale: 1, opacity: 1, duration: 1.2, ease: 'power4.out', startAt: { scale: 0.9, opacity: 0 }})
+        .to('.intro-title-char', { y: 0, opacity: 1, stagger: 0.03, duration: 1, ease: 'power4.out', startAt: { y: '100%', opacity: 0 }}, "-=0.8")
+        .to('.intro-subtitle', { y: 0, opacity: 1, duration: 1, ease: 'power3.out', startAt: { y: 20, opacity: 0 }}, "-=0.6")
+        
+        // Hold
+        .to({}, { duration: 1.2 }) 
+
+        // Phase 2: Fade Out & Wipe Up
+        .to(['.intro-logo', '.intro-title-line', '.intro-subtitle'], { y: -50, opacity: 0, duration: 1, stagger: 0.1, ease: 'power3.inOut' })
+        .to('.intro-container', { y: '-100%', duration: 1.2, ease: 'expo.inOut' }, "-=0.6")
+        
+        // Phase 3: Hero Reveal
+        .to('.hero-wrapper', { scale: 1, y: 0, opacity: 1, duration: 1.5, ease: 'power4.out', startAt: { scale: 1.03, y: 40, opacity: 0 } }, "-=0.8")
+        .to('.hero-text-line', {
+          y: 0,
+          opacity: 1,
+          duration: 1.5,
+          stagger: 0.15,
+          ease: "power4.out",
+          startAt: { y: "100%", opacity: 0 }
+        }, "-=1")
+        .to('.hero-desc', {
+          y: 0,
+          opacity: 1,
+          duration: 1.5,
+          ease: "power4.out",
+          startAt: { y: "100%", opacity: 0 }
+        }, "-=1.1")
+        .to('.hero-btn', {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.15,
+          ease: "expo.out",
+          startAt: { y: 30, opacity: 0 }
+        }, "-=1.2");
+
+    } else {
+      // Animasi GSAP Hero Section Normal (tanpa intro)
+      const tl = gsap.timeline({ delay: 0.2 });
+      
+      tl.to('.hero-wrapper', { scale: 1, y: 0, opacity: 1, duration: 1, ease: 'power4.out', startAt: { scale: 1.02, y: 20, opacity: 0 }})
+        .to('.hero-text-line', {
+          y: 0,
+          opacity: 1,
+          duration: 1.5,
+          stagger: 0.15,
+          ease: "power4.out",
+          startAt: { y: "100%", opacity: 0 }
+        }, "-=0.8")
+        .to('.hero-desc', {
+          y: 0,
+          opacity: 1,
+          duration: 1.5,
+          ease: "power4.out",
+          startAt: { y: "100%", opacity: 0 }
+        }, "-=1.1")
+        .to('.hero-btn', {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.15,
+          ease: "expo.out",
+          startAt: { y: 30, opacity: 0 }
+        }, "-=1.2");
+    }
+  }, [showIntro]);
 
   return (
     <div className="bg-stone-50">
+      {/* ===== INTRO OVERLAY ===== */}
+      {showIntro && (
+        <div className="intro-container fixed inset-0 z-[100] bg-slate-900 flex flex-col items-center justify-center overflow-hidden">
+          {/* Subtle gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-950 via-slate-900 to-teal-950 opacity-80" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
+          
+          <div className="relative z-10 text-center px-4 w-full max-w-4xl mx-auto">
+            <img src={logoUrl} alt="Logo Desa Girirejo" className="intro-logo w-20 h-20 md:w-28 md:h-28 mx-auto mb-8 opacity-0 drop-shadow-2xl" />
+            
+            <div className="overflow-hidden pb-2 mb-4">
+              <h1 className="intro-title-line text-3xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight flex flex-wrap justify-center gap-2 md:gap-4">
+                {"Selamat Datang di Desa Girirejo".split(" ").map((word, wIdx) => (
+                  <span key={wIdx} className="inline-block whitespace-nowrap">
+                    {word.split("").map((char, cIdx) => (
+                      <span key={cIdx} className="intro-title-char inline-block opacity-0">
+                        {char}
+                      </span>
+                    ))}
+                  </span>
+                ))}
+              </h1>
+            </div>
+            
+            <p className="intro-subtitle text-emerald-200/80 text-lg md:text-xl font-medium tracking-wide opacity-0">
+              Desa Maju, Asri, dan Berbudaya
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* ===== HERO SECTION ===== */}
-      <section className="relative min-h-[75vh] md:min-h-screen flex flex-col items-center justify-center overflow-hidden pt-12 md:pt-0">
+      <section className="hero-wrapper opacity-0 translate-y-10 scale-105 relative min-h-[75vh] md:min-h-screen flex flex-col items-center justify-center overflow-hidden pt-12 md:pt-0">
         {/* Background Gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-900 via-teal-800 to-emerald-700" />
         {/* Dekorasi Blob */}
