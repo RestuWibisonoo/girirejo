@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import gsap from 'gsap';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Users, Store, BookOpen, MapPin, ChevronDown } from 'lucide-react';
 import api from '../../services/api';
@@ -59,6 +60,40 @@ const HomePage = () => {
       .then(res => setPerangkat(res.data.data || []))
       .catch(() => setPerangkat([]))
       .finally(() => setLoading(false));
+
+    // Animasi GSAP Hero Section
+    const tl = gsap.timeline({ delay: 0.2 });
+    
+    tl.to('.hero-text-welcome', {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "power3.out",
+      startAt: { y: 30, opacity: 0 }
+    })
+    .to('.hero-char', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.05,
+      ease: "back.out(1.7)",
+      startAt: { y: 40, opacity: 0 }
+    }, "-=0.6")
+    .to('.hero-desc', {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "power3.out",
+      startAt: { y: 20, opacity: 0 }
+    }, "-=0.4")
+    .to('.hero-btn', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.1,
+      ease: "power2.out",
+      startAt: { y: 20, opacity: 0 }
+    }, "-=0.6");
   }, []);
 
   return (
@@ -81,12 +116,20 @@ const HomePage = () => {
 
           {/* Heading */}
           <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white mb-6 leading-tight tracking-tight">
-            Selamat Datang di{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-200">
-              Desa Girirejo
+            <span className="hero-text-welcome inline-block opacity-0">Selamat Datang di</span>{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-200 inline-block pb-2">
+              {"Desa Girirejo".split(" ").map((word, wordIndex) => (
+                <span key={wordIndex} className="inline-block whitespace-nowrap mr-3 md:mr-5 last:mr-0">
+                  {word.split("").map((char, charIndex) => (
+                    <span key={charIndex} className="inline-block opacity-0 hero-char">
+                      {char}
+                    </span>
+                  ))}
+                </span>
+              ))}
             </span>
           </h1>
-          <p className="text-xl text-emerald-100 max-w-2xl mx-auto mb-12 leading-relaxed">
+          <p className="hero-desc opacity-0 text-xl text-emerald-100 max-w-2xl mx-auto mb-12 leading-relaxed">
             Bersama membangun desa yang mandiri, transparan, dan sejahtera untuk seluruh warga Girirejo.
           </p>
 
@@ -94,13 +137,13 @@ const HomePage = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/umkm"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-brand-accent text-white font-bold rounded-2xl shadow-lg hover:bg-orange-600 hover:-translate-y-0.5 hover:shadow-xl transition-all"
+              className="hero-btn opacity-0 inline-flex items-center gap-2 px-8 py-4 bg-brand-accent text-white font-bold rounded-2xl shadow-lg hover:bg-orange-600 hover:-translate-y-0.5 hover:shadow-xl transition-all"
             >
               <Store size={20} /> Lihat Produk UMKM
             </Link>
             <Link
               to="/publikasi"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/30 text-white font-bold rounded-2xl hover:bg-white/20 hover:-translate-y-0.5 transition-all"
+              className="hero-btn opacity-0 inline-flex items-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/30 text-white font-bold rounded-2xl hover:bg-white/20 hover:-translate-y-0.5 transition-all"
             >
               <BookOpen size={20} /> Berita & Kegiatan
             </Link>
