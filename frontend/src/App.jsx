@@ -9,6 +9,7 @@ import UMKMPage from './pages/public/UMKMPage';
 import UMKMDetailPage from './pages/public/UMKMDetailPage';
 import PublikasiPage from './pages/public/PublikasiPage';
 import PublikasiDetailPage from './pages/public/PublikasiDetailPage';
+import PetaPage from './pages/public/PetaPage';
 
 // Halaman Admin
 import Login from './pages/admin/Login';
@@ -16,6 +17,7 @@ import Dashboard from './pages/admin/Dashboard';
 import PerangkatDesa from './pages/admin/PerangkatDesa';
 import UMKM from './pages/admin/UMKM';
 import Publikasi from './pages/admin/Publikasi';
+import PetaDesaAdmin from './pages/admin/PetaDesa';
 
 function App() {
   return (
@@ -28,6 +30,7 @@ function App() {
           <Route path="/umkm/:id" element={<UMKMDetailPage />} />
           <Route path="/publikasi" element={<PublikasiPage />} />
           <Route path="/publikasi/:slug" element={<PublikasiDetailPage />} />
+          <Route path="/peta" element={<PetaPage />} />
         </Route>
 
         {/* Rute Autentikasi Admin */}
@@ -40,6 +43,7 @@ function App() {
             <Route path="perangkat" element={<PerangkatDesa />} />
             <Route path="umkm" element={<UMKM />} />
             <Route path="publikasi" element={<Publikasi />} />
+            <Route path="peta" element={<PetaDesaAdmin />} />
           </Route>
         </Route>
 

@@ -25,3 +25,5 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+@import 'leaflet/dist/leaflet.css';

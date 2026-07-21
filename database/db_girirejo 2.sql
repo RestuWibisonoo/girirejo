@@ -65,3 +65,21 @@ CREATE TABLE IF NOT EXISTS visitor_logs (
     visit_date DATE NOT NULL,
     UNIQUE KEY unique_visit (ip_address, visit_date)
 );
+
+CREATE TABLE IF NOT EXISTS kategori_peta (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nama_kategori VARCHAR(100) NOT NULL,
+    ikon_warna VARCHAR(20) DEFAULT 'blue'
+);
+
+CREATE TABLE IF NOT EXISTS lokasi_peta (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    kategori_id INT,
+    nama_lokasi VARCHAR(255) NOT NULL,
+    deskripsi TEXT,
+    alamat TEXT,
+    latitude DECIMAL(10, 8) NOT NULL,
+    longitude DECIMAL(11, 8) NOT NULL,
+    foto_url VARCHAR(255),
+    FOREIGN KEY (kategori_id) REFERENCES kategori_peta(id) ON DELETE SET NULL
+);
