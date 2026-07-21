@@ -30,6 +30,11 @@ const PerangkatCard = ({ perangkat }) => {
       <div className="text-center px-2">
         <h3 className="text-lg font-bold text-slate-800">{perangkat.nama_lengkap}</h3>
         <p className="text-brand-primary font-medium">{perangkat.jabatan}</p>
+        {perangkat.nip && (
+          <p className="text-xs text-slate-500 mt-1 font-medium bg-slate-100 py-1 px-3 rounded-full inline-block">
+            NIP/NIAP: {perangkat.nip}
+          </p>
+        )}
       </div>
     </div>
   );

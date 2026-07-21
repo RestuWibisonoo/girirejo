@@ -28,7 +28,7 @@ const perangkatController = {
 
     create: async (req, res) => {
         try {
-            const { nama_lengkap, jabatan, urutan_tampil } = req.body;
+            const { nama_lengkap, jabatan, nip, urutan_tampil } = req.body;
             
             // Validasi manual
             if (!nama_lengkap || !jabatan) {
@@ -49,7 +49,7 @@ const perangkatController = {
             }
 
             const newId = await PerangkatModel.create({
-                nama_lengkap, jabatan, urutan_tampil, foto_awal_url, foto_hover_url
+                nama_lengkap, jabatan, nip, urutan_tampil, foto_awal_url, foto_hover_url
             });
 
             return res.status(201).json({
@@ -66,7 +66,7 @@ const perangkatController = {
     update: async (req, res) => {
         try {
             const { id } = req.params;
-            const { nama_lengkap, jabatan, urutan_tampil } = req.body;
+            const { nama_lengkap, jabatan, nip, urutan_tampil } = req.body;
 
             const existingData = await PerangkatModel.getById(id);
             if (!existingData) {
@@ -90,6 +90,7 @@ const perangkatController = {
             await PerangkatModel.update(id, {
                 nama_lengkap: nama_lengkap || existingData.nama_lengkap,
                 jabatan: jabatan || existingData.jabatan,
+                nip: nip !== undefined ? nip : existingData.nip,
                 urutan_tampil: urutan_tampil || existingData.urutan_tampil,
                 foto_awal_url,
                 foto_hover_url

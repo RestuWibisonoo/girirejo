@@ -20,7 +20,7 @@ const JABATAN_OPTIONS = [
 ];
 
 const PerangkatModal = ({ isOpen, onClose, onSuccess, initialData }) => {
-  const [formData, setFormData] = useState({ nama_lengkap: '', jabatan: '', urutan_tampil: 99 });
+  const [formData, setFormData] = useState({ nama_lengkap: '', jabatan: '', nip: '', urutan_tampil: 99 });
   const [fotoAwal, setFotoAwal] = useState(null);
   const [fotoHover, setFotoHover] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -32,13 +32,14 @@ const PerangkatModal = ({ isOpen, onClose, onSuccess, initialData }) => {
       setFormData({
         nama_lengkap: initialData.nama_lengkap || '',
         jabatan: initialData.jabatan || '',
+        nip: initialData.nip || '',
         urutan_tampil: initialData.urutan_tampil || 99
       });
       setFotoAwal(null);
       setFotoHover(null);
       setError('');
     } else {
-      setFormData({ nama_lengkap: '', jabatan: JABATAN_OPTIONS[0].value, urutan_tampil: JABATAN_OPTIONS[0].urutan });
+      setFormData({ nama_lengkap: '', jabatan: JABATAN_OPTIONS[0].value, nip: '', urutan_tampil: JABATAN_OPTIONS[0].urutan });
       setFotoAwal(null);
       setFotoHover(null);
       setError('');
@@ -55,6 +56,7 @@ const PerangkatModal = ({ isOpen, onClose, onSuccess, initialData }) => {
     const data = new FormData();
     data.append('nama_lengkap', formData.nama_lengkap);
     data.append('jabatan', formData.jabatan);
+    data.append('nip', formData.nip);
     data.append('urutan_tampil', formData.urutan_tampil);
     
     if (fotoAwal) data.append('foto_awal', fotoAwal);
@@ -113,6 +115,17 @@ const PerangkatModal = ({ isOpen, onClose, onSuccess, initialData }) => {
                 placeholder="Cth: Budi Santoso"
                 value={formData.nama_lengkap}
                 onChange={(e) => setFormData({...formData, nama_lengkap: e.target.value})}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">NIP / NIAP <span className="text-slate-400 font-normal">(Opsional)</span></label>
+              <input 
+                type="text" 
+                className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-primary transition-all"
+                placeholder="Cth: 19801010 200501 1 001"
+                value={formData.nip}
+                onChange={(e) => setFormData({...formData, nip: e.target.value})}
               />
             </div>
             

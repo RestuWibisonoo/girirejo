@@ -23,6 +23,7 @@ CREATE TABLE perangkat_desa (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nama_lengkap VARCHAR(100) NOT NULL,
     jabatan VARCHAR(100) NOT NULL,
+    nip VARCHAR(50) DEFAULT NULL,
     urutan_tampil INT DEFAULT 0,
     foto_awal_url VARCHAR(255),
     foto_hover_url VARCHAR(255)

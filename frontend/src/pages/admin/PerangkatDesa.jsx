@@ -116,7 +116,8 @@ const PerangkatDesa = () => {
                           </td>
                           <td className="p-5">
                               <div className="font-bold text-slate-800 text-lg mb-1">{item.nama_lengkap}</div>
-                              <div className="text-brand-primary font-medium text-sm inline-flex items-center bg-emerald-50 px-2 py-0.5 rounded-md">{item.jabatan}</div>
+                              <div className="text-brand-primary font-medium text-sm inline-flex items-center bg-emerald-50 px-2 py-0.5 rounded-md mr-2">{item.jabatan}</div>
+                              {item.nip && <div className="text-slate-500 font-medium text-sm inline-flex items-center bg-slate-100 px-2 py-0.5 rounded-md">NIP: {item.nip}</div>}
                           </td>
                           <td className="p-5">
                             <div className="flex justify-end gap-3">

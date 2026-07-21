@@ -14,23 +14,23 @@ const PerangkatModel = {
     },
 
     create: async (data) => {
-        const { nama_lengkap, jabatan, urutan_tampil, foto_awal_url, foto_hover_url } = data;
+        const { nama_lengkap, jabatan, nip, urutan_tampil, foto_awal_url, foto_hover_url } = data;
         const query = `
-            INSERT INTO perangkat_desa (nama_lengkap, jabatan, urutan_tampil, foto_awal_url, foto_hover_url)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO perangkat_desa (nama_lengkap, jabatan, nip, urutan_tampil, foto_awal_url, foto_hover_url)
+            VALUES (?, ?, ?, ?, ?, ?)
         `;
-        const [result] = await db.query(query, [nama_lengkap, jabatan, urutan_tampil || 0, foto_awal_url, foto_hover_url]);
+        const [result] = await db.query(query, [nama_lengkap, jabatan, nip || null, urutan_tampil || 0, foto_awal_url, foto_hover_url]);
         return result.insertId;
     },
 
     update: async (id, data) => {
-        const { nama_lengkap, jabatan, urutan_tampil, foto_awal_url, foto_hover_url } = data;
+        const { nama_lengkap, jabatan, nip, urutan_tampil, foto_awal_url, foto_hover_url } = data;
         const query = `
             UPDATE perangkat_desa 
-            SET nama_lengkap = ?, jabatan = ?, urutan_tampil = ?, foto_awal_url = ?, foto_hover_url = ?
+            SET nama_lengkap = ?, jabatan = ?, nip = ?, urutan_tampil = ?, foto_awal_url = ?, foto_hover_url = ?
             WHERE id = ?
         `;
-        const [result] = await db.query(query, [nama_lengkap, jabatan, urutan_tampil || 0, foto_awal_url, foto_hover_url, id]);
+        const [result] = await db.query(query, [nama_lengkap, jabatan, nip !== undefined ? nip : null, urutan_tampil || 0, foto_awal_url, foto_hover_url, id]);
         return result.affectedRows;
     },
 
