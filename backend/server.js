@@ -19,6 +19,7 @@ const perangkatRoutes = require('./src/routes/perangkatRoutes');
 const kategoriUmkmRoutes = require('./src/routes/kategoriUmkmRoutes');
 const umkmRoutes = require('./src/routes/umkmRoutes');
 const publikasiRoutes = require('./src/routes/publikasiRoutes');
+const visitorRoutes = require('./src/routes/visitorRoutes');
 
 // Test Route
 app.get('/', (req, res) => {
@@ -32,6 +33,7 @@ app.use('/api/perangkat-desa', perangkatRoutes);
 app.use('/api/kategori-umkm', kategoriUmkmRoutes);
 app.use('/api/umkm', umkmRoutes);
 app.use('/api/publikasi', publikasiRoutes);
+app.use('/api/visitors', visitorRoutes);
 
 // Jalankan Server
 app.listen(PORT, () => {

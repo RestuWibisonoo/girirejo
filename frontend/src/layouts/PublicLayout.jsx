@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import api from '../services/api';
 
 const PublicLayout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,6 +11,27 @@ const PublicLayout = () => {
   React.useEffect(() => {
     setIsMenuOpen(false);
   }, [location.pathname]);
+
+  const [visitorStats, setVisitorStats] = useState({
+    hari_ini: 0,
+    bulan_ini: 0,
+    tahun_ini: 0,
+    tahun_kemarin: 0
+  });
+
+  React.useEffect(() => {
+    // Record visit (silent fail if any)
+    api.post('/visitors').catch(() => {});
+
+    // Get visitor stats
+    api.get('/visitors/stats')
+      .then(res => {
+        if (res.data && res.data.success) {
+          setVisitorStats(res.data.data);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -91,19 +113,19 @@ const PublicLayout = () => {
                   <ul className="space-y-3 text-sm">
                     <li className="flex justify-between items-center border-b border-slate-700/50 pb-3">
                       <span className="text-slate-400">Tahun Kemarin</span>
-                      <span className="font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-md">12.450</span>
+                      <span className="font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-md">{visitorStats.tahun_kemarin.toLocaleString('id-ID')}</span>
                     </li>
                     <li className="flex justify-between items-center border-b border-slate-700/50 pb-3">
                       <span className="text-slate-400">Tahun Ini</span>
-                      <span className="font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-md">8.921</span>
+                      <span className="font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-md">{visitorStats.tahun_ini.toLocaleString('id-ID')}</span>
                     </li>
                     <li className="flex justify-between items-center border-b border-slate-700/50 pb-3">
                       <span className="text-slate-400">Bulan Ini</span>
-                      <span className="font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-md">645</span>
+                      <span className="font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-md">{visitorStats.bulan_ini.toLocaleString('id-ID')}</span>
                     </li>
                     <li className="flex justify-between items-center">
                       <span className="text-slate-400">Hari Ini</span>
-                      <span className="font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-md">24</span>
+                      <span className="font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-md">{visitorStats.hari_ini.toLocaleString('id-ID')}</span>
                     </li>
                   </ul>
                 </div>

@@ -59,3 +59,9 @@ CREATE TABLE publikasi (
     author_id INT,
     FOREIGN KEY (author_id) REFERENCES admins(id) ON DELETE SET NULL
 );
+CREATE TABLE IF NOT EXISTS visitor_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ip_address VARCHAR(45) NOT NULL,
+    visit_date DATE NOT NULL,
+    UNIQUE KEY unique_visit (ip_address, visit_date)
+);
