@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Users, Store, BookOpen, MapPin, ChevronDown } from 'lucide-react';
 import api from '../../services/api';
 import PerangkatCard from '../../components/PerangkatCard';
-import logoUrl from '../../assets/react.svg';
 
 // --- Data Statis Infografis ---
 const stats = [
@@ -154,7 +153,7 @@ const HomePage = () => {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
           
           <div className="relative z-10 text-center px-4 w-full max-w-4xl mx-auto">
-            <img src={logoUrl} alt="Logo Desa Girirejo" className="intro-logo w-20 h-20 md:w-28 md:h-28 mx-auto mb-8 opacity-0 drop-shadow-2xl" />
+            <img src="/logo.png" alt="Logo Desa Girirejo" className="intro-logo w-24 h-24 md:w-32 md:h-32 mx-auto mb-8 opacity-0 drop-shadow-2xl object-contain" />
             
             <div className="overflow-hidden pb-2 mb-4">
               <h1 className="intro-title-line text-3xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight flex flex-wrap justify-center gap-2 md:gap-4">
