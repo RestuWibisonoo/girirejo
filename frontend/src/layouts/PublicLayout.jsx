@@ -61,18 +61,52 @@ const PublicLayout = () => {
       </main>
       
       <footer className="bg-slate-900 text-stone-300 py-8 px-4 md:py-12 md:px-8 mt-16 md:mt-24">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
             <div>
-                <h3 className="text-xl font-bold text-white mb-4">Desa Girirejo</h3>
-                <p className="text-sm leading-relaxed">Website resmi pelayanan dan informasi Desa Girirejo. Membangun desa yang mandiri, transparan, dan sejahtera.</p>
+                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-3 justify-center md:justify-start">
+                  <img src="/logo.png" alt="Logo Desa" className="w-8 h-8 object-contain" />
+                  Desa Girirejo
+                </h3>
+                <div className="text-sm leading-relaxed space-y-3 text-slate-400">
+                  <p><strong className="text-stone-300">Alamat:</strong><br/>Jl. Sindas Klopo Girirejo Tegalrejo Magelang</p>
+                  <p><strong className="text-stone-300">Kode Pos:</strong> 56192</p>
+                  <p><strong className="text-stone-300">Telp:</strong> 085803672629</p>
+                  <p><strong className="text-stone-300">Email:</strong> girirejot.tglrj@gmail.com</p>
+                </div>
             </div>
-            <div className="md:col-start-3">
+            
+            <div>
                 <h3 className="text-xl font-bold text-white mb-4">Tautan</h3>
-                <ul className="space-y-2 text-sm flex flex-col items-center md:items-start">
-                    <li><Link to="/" className="hover:text-brand-accent transition-colors">Profil Desa</Link></li>
-                    <li><Link to="/umkm" className="hover:text-brand-accent transition-colors">Katalog UMKM</Link></li>
-                    <li><Link to="/publikasi" className="hover:text-brand-accent transition-colors">Berita & Publikasi</Link></li>
+                <ul className="space-y-3 text-sm flex flex-col items-center md:items-start text-slate-400">
+                    <li><Link to="/" className="hover:text-brand-accent hover:translate-x-1 transition-all inline-block">Profil Desa</Link></li>
+                    <li><Link to="/umkm" className="hover:text-brand-accent hover:translate-x-1 transition-all inline-block">Katalog UMKM</Link></li>
+                    <li><Link to="/publikasi" className="hover:text-brand-accent hover:translate-x-1 transition-all inline-block">Berita & Publikasi</Link></li>
+                    <li><Link to="/admin" className="hover:text-brand-accent hover:translate-x-1 transition-all inline-block">Login Admin</Link></li>
                 </ul>
+            </div>
+
+            <div>
+                <h3 className="text-xl font-bold text-white mb-4">Pengunjung</h3>
+                <div className="bg-slate-800/80 rounded-2xl p-5 border border-slate-700/50 shadow-inner">
+                  <ul className="space-y-3 text-sm">
+                    <li className="flex justify-between items-center border-b border-slate-700/50 pb-3">
+                      <span className="text-slate-400">Tahun Kemarin</span>
+                      <span className="font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-md">12.450</span>
+                    </li>
+                    <li className="flex justify-between items-center border-b border-slate-700/50 pb-3">
+                      <span className="text-slate-400">Tahun Ini</span>
+                      <span className="font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-md">8.921</span>
+                    </li>
+                    <li className="flex justify-between items-center border-b border-slate-700/50 pb-3">
+                      <span className="text-slate-400">Bulan Ini</span>
+                      <span className="font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-md">645</span>
+                    </li>
+                    <li className="flex justify-between items-center">
+                      <span className="text-slate-400">Hari Ini</span>
+                      <span className="font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-md">24</span>
+                    </li>
+                  </ul>
+                </div>
             </div>
         </div>
         <div className="border-t border-slate-700 mt-8 pt-8 text-center text-sm text-slate-500">
