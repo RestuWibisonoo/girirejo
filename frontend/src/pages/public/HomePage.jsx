@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import gsap from 'gsap';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Store, BookOpen, MapPin, ChevronDown, Map } from 'lucide-react';
+import { ArrowRight, Users, Store, BookOpen, MapPin, ChevronDown } from 'lucide-react';
 import api from '../../services/api';
 import PerangkatCard from '../../components/PerangkatCard';
 
@@ -246,32 +246,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* ===== PETA DESA PREVIEW ===== */}
-      <section className="py-16 px-4 bg-white border-b border-stone-100">
-        <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-block bg-brand-primary/10 text-brand-primary text-sm font-bold px-4 py-2 rounded-full mb-5">
-            <Map size={14} className="inline-block mr-1 -mt-0.5" /> WebGIS Girirejo
-          </div>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-6">Peta Interaktif Desa</h2>
-          <p className="text-slate-500 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Jelajahi batas wilayah, fasilitas umum, lokasi UMKM, dan area wisata di Desa Girirejo melalui peta interaktif kami.
-          </p>
-          
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-stone-200 bg-stone-100 aspect-video md:aspect-[21/9] max-h-[400px] flex items-center justify-center group cursor-pointer" onClick={() => window.location.href = '/peta'}>
-            <div className="absolute inset-0 bg-[url('https://unpkg.com/leaflet@1.9.4/dist/images/layers.png')] bg-repeat opacity-5"></div>
-            <div className="absolute inset-0 bg-emerald-900/10 group-hover:bg-emerald-900/0 transition-colors duration-500"></div>
-            
-            <div className="z-10 flex flex-col items-center">
-              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-xl mb-4 group-hover:scale-110 group-hover:shadow-brand-primary/20 transition-transform duration-300">
-                <MapPin className="text-brand-primary w-10 h-10" />
-              </div>
-              <Link to="/peta" className="bg-brand-primary text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:bg-emerald-700 transition-colors">
-                Buka Peta Interaktif
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ===== VISI & MISI SECTION ===== */}
       <section className="py-16 md:py-24 px-4">

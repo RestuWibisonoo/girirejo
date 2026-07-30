@@ -6,5 +6,15 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: true, // Expose ke network lokal agar bisa diakses dari HP
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5001',
+        changeOrigin: true,
+      },
+      '/uploads': {
+        target: 'http://localhost:5001',
+        changeOrigin: true,
+      }
+    }
   },
 })

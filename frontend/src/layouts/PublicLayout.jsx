@@ -48,9 +48,6 @@ const PublicLayout = () => {
             <Link to="/" className="text-slate-600 hover:text-brand-accent transition-colors font-medium">Beranda</Link>
             <Link to="/umkm" className="text-slate-600 hover:text-brand-accent transition-colors font-medium">UMKM</Link>
             <Link to="/publikasi" className="text-slate-600 hover:text-brand-accent transition-colors font-medium">Publikasi</Link>
-            <Link to="/admin" className="text-sm px-5 py-2 bg-brand-primary text-white rounded-xl shadow-lg hover:bg-emerald-800 hover:shadow-xl hover:-translate-y-0.5 transition-all">
-              Admin Panel
-            </Link>
           </nav>
 
           {/* Mobile Menu Toggle */}
@@ -70,11 +67,6 @@ const PublicLayout = () => {
             <Link to="/" className="text-slate-600 hover:text-brand-primary font-medium p-2 rounded-lg hover:bg-stone-50">Beranda</Link>
             <Link to="/umkm" className="text-slate-600 hover:text-brand-primary font-medium p-2 rounded-lg hover:bg-stone-50">UMKM</Link>
             <Link to="/publikasi" className="text-slate-600 hover:text-brand-primary font-medium p-2 rounded-lg hover:bg-stone-50">Publikasi</Link>
-            <div className="pt-2 border-t border-stone-100">
-              <Link to="/admin" className="block text-center text-sm px-5 py-3 bg-brand-primary text-white rounded-xl shadow-md hover:bg-emerald-800 transition-colors w-full">
-                Admin Panel
-              </Link>
-            </div>
           </nav>
         </div>
       </header>
@@ -104,7 +96,6 @@ const PublicLayout = () => {
                     <li><Link to="/" className="hover:text-brand-accent hover:translate-x-1 transition-all inline-block">Profil Desa</Link></li>
                     <li><Link to="/umkm" className="hover:text-brand-accent hover:translate-x-1 transition-all inline-block">Katalog UMKM</Link></li>
                     <li><Link to="/publikasi" className="hover:text-brand-accent hover:translate-x-1 transition-all inline-block">Berita & Publikasi</Link></li>
-                    <li><Link to="/admin" className="hover:text-brand-accent hover:translate-x-1 transition-all inline-block">Login Admin</Link></li>
                 </ul>
             </div>
 

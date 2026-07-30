@@ -16,7 +16,7 @@ const PerangkatDesa = () => {
     setLoading(true);
     try {
       const response = await api.get('/perangkat-desa');
-      setData(response.data.data);
+      setData(Array.isArray(response.data.data) ? response.data.data : []);
     } catch (error) {
       console.error("Gagal mengambil data perangkat desa", error);
     } finally {

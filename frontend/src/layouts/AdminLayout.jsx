@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Users, Store, FileText, LogOut, Menu, X, MapPin } from 'lucide-react';
+import { LayoutDashboard, Users, Store, FileText, LogOut, Menu, X } from 'lucide-react';
 
 const AdminLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -17,7 +17,6 @@ const AdminLayout = () => {
     { path: '/admin/perangkat', icon: <Users size={20} />, label: 'Perangkat Desa' },
     { path: '/admin/umkm', icon: <Store size={20} />, label: 'Katalog UMKM' },
     { path: '/admin/publikasi', icon: <FileText size={20} />, label: 'Publikasi' },
-    { path: '/admin/peta', icon: <MapPin size={20} />, label: 'Peta Desa' },
   ];
 
   return (
