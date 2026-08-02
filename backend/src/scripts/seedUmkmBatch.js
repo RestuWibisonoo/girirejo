@@ -173,6 +173,9 @@ async function seed() {
             catMap[cat.nama_kategori] = catId;
         }
 
+        console.log('Menghapus data UMKM lama...');
+        await pool.query('TRUNCATE TABLE umkm_katalog');
+
         console.log('Memasukkan kumpulan data UMKM baru...');
         for (const u of umkmData) {
             const kategori_id = catMap[u.kategori_nama] || catMap['Lainnya'];
