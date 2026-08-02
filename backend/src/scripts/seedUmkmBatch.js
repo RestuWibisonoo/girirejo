@@ -12,9 +12,20 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
+const categories = [
+  { nama_kategori: 'Makanan', slug: 'makanan' },
+  { nama_kategori: 'Minuman', slug: 'minuman' },
+  { nama_kategori: 'Kerajinan', slug: 'kerajinan' },
+  { nama_kategori: 'Pertanian', slug: 'pertanian' },
+  { nama_kategori: 'Jasa', slug: 'jasa' },
+  { nama_kategori: 'Fashion', slug: 'fashion' },
+  { nama_kategori: 'Lainnya', slug: 'lainnya' },
+  { nama_kategori: 'Kuliner Tradisional', slug: 'kuliner-tradisional' }
+];
+
 const umkmData = [
     {
-        kategori_id: 8, // Lainnya (Karena campuran kopi & jasa steam)
+        kategori_nama: 'Lainnya',
         nama_usaha: 'SHOD KOPI dan SHOD STEAM',
         nama_pemilik: 'Pak Risodi',
         deskripsi: 'Alamat: Geger, Girirejo, Tegalrejo.\nHarga: Rp 170.000 (kopi bubuk), Rp 150.000 (kopi bean), dan Rp 30.000 per karpet (untuk jasa steam, tergantung ukuran).',
@@ -24,7 +35,7 @@ const umkmData = [
         link_gmaps: ''
     },
     {
-        kategori_id: 3, // Makanan
+        kategori_nama: 'Makanan',
         nama_usaha: 'Rengginang Comel',
         nama_pemilik: 'Santo Khusnafi',
         deskripsi: 'Alamat: Kidul Kulon Geger II RT 3 RW 3, Girirejo, Tegalrejo.\nHarga: Comel Rp 35.000/kg, Putih Rp 13.000, Comel Rp 12.000 (2,5 ons).',
@@ -34,7 +45,7 @@ const umkmData = [
         link_gmaps: ''
     },
     {
-        kategori_id: 7, // Jasa
+        kategori_nama: 'Jasa',
         nama_usaha: 'Bengkel Las, Pandai Besi, Tambal Ban',
         nama_pemilik: 'Bapak Teguh Rahayu',
         deskripsi: 'Alamat: Geger 2.\nHarga: Pisau kecil Rp 10.000, pisau besar Rp 15.000 (bervariasi tergantung jenisnya).',
@@ -44,7 +55,7 @@ const umkmData = [
         link_gmaps: ''
     },
     {
-        kategori_id: 3, // Makanan
+        kategori_nama: 'Makanan',
         nama_usaha: 'Kerupuk Bintang Jaya',
         nama_pemilik: 'Pak Hamdani',
         deskripsi: 'Alamat: Geger II RT 2 Girirejo, Tegalrejo, Magelang.\nHarga: Rp 35.000 / 2kg.',
@@ -54,7 +65,7 @@ const umkmData = [
         link_gmaps: ''
     },
     {
-        kategori_id: 3, // Makanan
+        kategori_nama: 'Makanan',
         nama_usaha: 'Ceker Tanpa Tulang',
         nama_pemilik: 'Pak Iwan',
         deskripsi: 'Alamat: Geger.\nHarga: Rp 70.000 / 1 kg.',
@@ -64,7 +75,7 @@ const umkmData = [
         link_gmaps: ''
     },
     {
-        kategori_id: 3, // Makanan
+        kategori_nama: 'Makanan',
         nama_usaha: 'Sempol Ayam dan Ubi Lumer DA',
         nama_pemilik: 'Mba Anma',
         deskripsi: 'Alamat: Beran.\nHarga: Sempol Rp 1.500 (isi 3/mika), Ubi Lumer Rp 800. Sandwich Rp 2.500, Donat Rp 1.700.',
@@ -74,7 +85,7 @@ const umkmData = [
         link_gmaps: ''
     },
     {
-        kategori_id: 3, // Makanan
+        kategori_nama: 'Makanan',
         nama_usaha: 'Macam Macam Gorengan Mba Andin',
         nama_pemilik: 'Andin',
         deskripsi: 'Alamat: RT 2 Beran, Girirejo.\nHarga: Gorengan seribuan (dari Mba Andin Rp 800).',
@@ -84,7 +95,7 @@ const umkmData = [
         link_gmaps: ''
     },
     {
-        kategori_id: 1, // Kuliner Tradisional
+        kategori_nama: 'Kuliner Tradisional',
         nama_usaha: 'Jajanan Pasar Tenong (Produksi Lokal)',
         nama_pemilik: 'Bu Maryati',
         deskripsi: 'Alamat: RT 3 Beran, Girirejo.\nProduksi lokal dari ketela atau ubi. Mulai jualan keliling jam 6 pagi.\nHarga: Rp 1.000 - Rp 3.000.',
@@ -94,7 +105,7 @@ const umkmData = [
         link_gmaps: ''
     },
     {
-        kategori_id: 1, // Kuliner Tradisional
+        kategori_nama: 'Kuliner Tradisional',
         nama_usaha: 'Jajan Pasar Bu Yati',
         nama_pemilik: 'Sri Nuryati',
         deskripsi: 'Alamat: RT 3 Beran, Girirejo.\nHarga: Seribuan.',
@@ -104,7 +115,7 @@ const umkmData = [
         link_gmaps: ''
     },
     {
-        kategori_id: 1, // Kuliner Tradisional
+        kategori_nama: 'Kuliner Tradisional',
         nama_usaha: 'Jajanan Pasar Tenong',
         nama_pemilik: 'Bu Suprapti',
         deskripsi: 'Alamat: Beran, Girirejo.\nHarga: Rp 1.000 - Rp 3.000.',
@@ -114,7 +125,7 @@ const umkmData = [
         link_gmaps: ''
     },
     {
-        kategori_id: 3, // Makanan
+        kategori_nama: 'Makanan',
         nama_usaha: 'Kerupuk Cap Udang Bintang',
         nama_pemilik: 'Ibu Sugiarti',
         deskripsi: 'Alamat: Geger.\nHarga: Rp 70.000 / 4kg.',
@@ -124,7 +135,7 @@ const umkmData = [
         link_gmaps: ''
     },
     {
-        kategori_id: 3, // Makanan
+        kategori_nama: 'Makanan',
         nama_usaha: 'Kerupuk Cap Jempol',
         nama_pemilik: 'Bapak Ghufron',
         deskripsi: 'Alamat: Geger 2.\nHarga: Rp 55.000 / 3kg.',
@@ -134,7 +145,7 @@ const umkmData = [
         link_gmaps: ''
     },
     {
-        kategori_id: 3, // Makanan
+        kategori_nama: 'Makanan',
         nama_usaha: 'Kerupuk Udang Telur',
         nama_pemilik: 'Pak Anwari',
         deskripsi: 'Alamat: Geger 2.\nBerdiri sejak tahun 1970. Saat ini usaha diteruskan oleh anaknya.\nHarga: Dijual per 5kg (harga menyesuaikan).',
@@ -147,11 +158,27 @@ const umkmData = [
 
 async function seed() {
     try {
+        console.log('Memastikan Kategori UMKM tersedia...');
+        const catMap = {};
+        for (const cat of categories) {
+            const [existing] = await pool.query('SELECT id FROM kategori_umkm WHERE nama_kategori = ?', [cat.nama_kategori]);
+            
+            let catId;
+            if (existing && existing.length > 0) {
+                catId = existing[0].id;
+            } else {
+                const [result] = await pool.query('INSERT INTO kategori_umkm (nama_kategori, slug) VALUES (?, ?)', [cat.nama_kategori, cat.slug]);
+                catId = result.insertId;
+            }
+            catMap[cat.nama_kategori] = catId;
+        }
+
         console.log('Memasukkan kumpulan data UMKM baru...');
         for (const u of umkmData) {
+            const kategori_id = catMap[u.kategori_nama] || catMap['Lainnya'];
             await pool.query(
                 'INSERT INTO umkm_katalog (kategori_id, nama_usaha, nama_pemilik, deskripsi, harga_mulai, no_wa, foto_url, link_gmaps) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                [u.kategori_id, u.nama_usaha, u.nama_pemilik, u.deskripsi, u.harga_mulai, u.no_wa, u.foto_url, u.link_gmaps]
+                [kategori_id, u.nama_usaha, u.nama_pemilik, u.deskripsi, u.harga_mulai, u.no_wa, u.foto_url, u.link_gmaps]
             );
             console.log(`Berhasil insert: ${u.nama_usaha}`);
         }
