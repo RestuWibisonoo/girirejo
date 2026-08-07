@@ -42,7 +42,7 @@ const upload = multer({
     storage: storage,
     fileFilter: fileFilter,
     limits: {
-        fileSize: 5 * 1024 * 1024 // Maksimal ukuran 5MB
+        fileSize: 20 * 1024 * 1024 // Maksimal ukuran 20MB (Nanti akan dikompres oleh sharp)
     }
 });
 
