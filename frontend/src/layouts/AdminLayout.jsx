@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Users, Store, FileText, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Users, Store, FileText, LogOut, Menu, X, Shield } from 'lucide-react';
 
 const AdminLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -12,12 +12,18 @@ const AdminLayout = () => {
     navigate('/admin/login');
   };
 
+  const adminRole = localStorage.getItem('adminRole');
+
   const menuItems = [
     { path: '/admin', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
     { path: '/admin/perangkat', icon: <Users size={20} />, label: 'Perangkat Desa' },
     { path: '/admin/umkm', icon: <Store size={20} />, label: 'Katalog UMKM' },
     { path: '/admin/publikasi', icon: <FileText size={20} />, label: 'Publikasi' },
   ];
+
+  if (adminRole === 'superadmin') {
+    menuItems.push({ path: '/admin/pengguna', icon: <Shield size={20} />, label: 'Manajemen Admin' });
+  }
 
   return (
     <div className="min-h-screen flex bg-stone-50 overflow-hidden">

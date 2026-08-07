@@ -25,4 +25,18 @@ const authMiddleware = (req, res, next) => {
     }
 };
 
-module.exports = authMiddleware;
+const requireSuperAdmin = [
+    authMiddleware,
+    (req, res, next) => {
+        if (req.admin && req.admin.role === 'superadmin') {
+            next();
+        } else {
+            return res.status(403).json({
+                status: "error",
+                message: "Akses ditolak. Fitur ini hanya untuk Super Admin."
+            });
+        }
+    }
+];
+
+module.exports = { authMiddleware, requireSuperAdmin };

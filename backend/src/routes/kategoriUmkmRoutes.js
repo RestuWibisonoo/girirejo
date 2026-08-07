@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const kategoriController = require('../controllers/kategoriUmkmController');
-const authMiddleware = require('../middlewares/authMiddleware');
+const { authMiddleware } = require('../middlewares/authMiddleware');
 
 router.get('/', kategoriController.getAll);
 router.post('/', authMiddleware, kategoriController.create);

@@ -56,6 +56,9 @@ const PublikasiModal = ({ isOpen, onClose, onSuccess, initialData }) => {
     data.append('tipe', formData.jenis.toLowerCase());
     data.append('konten', formData.ringkasan);
     data.append('tags', formData.tags);
+    if (localStorage.getItem('adminRole') === 'superadmin' && formData.tanggal) {
+        data.append('tanggal_publikasi', formData.tanggal);
+    }
     if (thumbnail) data.append('gambar', thumbnail);
     if (filePdf) data.append('lampiran', filePdf);
 
@@ -125,7 +128,7 @@ const PublikasiModal = ({ isOpen, onClose, onSuccess, initialData }) => {
             </div>
 
             {/* Jenis & Tanggal */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className={`grid ${localStorage.getItem('adminRole') === 'superadmin' ? 'grid-cols-2' : 'grid-cols-1'} gap-4`}>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-2">
                   Jenis Publikasi <span className="text-red-500">*</span>
@@ -139,6 +142,8 @@ const PublikasiModal = ({ isOpen, onClose, onSuccess, initialData }) => {
                   {JENIS_OPTIONS.map(j => <option key={j} value={j}>{j}</option>)}
                 </select>
               </div>
+              
+              {localStorage.getItem('adminRole') === 'superadmin' && (
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-2">
                   Tanggal Publikasi <span className="text-red-500">*</span>
@@ -152,6 +157,7 @@ const PublikasiModal = ({ isOpen, onClose, onSuccess, initialData }) => {
                   onChange={handleChange}
                 />
               </div>
+              )}
             </div>
 
             {/* Ringkasan */}

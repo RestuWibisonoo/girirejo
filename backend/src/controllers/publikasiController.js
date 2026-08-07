@@ -53,7 +53,7 @@ const publikasiController = {
 
     create: async (req, res) => {
         try {
-            const { tipe, judul, konten, tags } = req.body;
+            const { tipe, judul, konten, tags, tanggal_publikasi } = req.body;
             
             if (!tipe || !judul || !konten) {
                 return res.status(400).json({ status: "error", message: "Field tipe, judul, dan konten wajib diisi." });
@@ -81,12 +81,14 @@ const publikasiController = {
 
             // Dapatkan ID admin dari token JWT
             const author_id = req.admin.id; 
-            
             // Format YYYY-MM-DD
-            const tanggal_publikasi = new Date().toISOString().split('T')[0];
+            let final_tanggal = new Date().toISOString().split('T')[0];
+            if (req.admin.role === 'superadmin' && tanggal_publikasi) {
+                final_tanggal = tanggal_publikasi;
+            }
 
             const newId = await PublikasiModel.create({
-                tipe, judul, slug, konten, foto_url, lampiran_url, author_id, tanggal_publikasi, tags
+                tipe, judul, slug, konten, foto_url, lampiran_url, author_id, tanggal_publikasi: final_tanggal, tags
             });
 
             return res.status(201).json({ 
@@ -108,7 +110,7 @@ const publikasiController = {
                 return res.status(404).json({ status: "error", message: "Publikasi tidak ditemukan." });
             }
 
-            const { tipe, judul, konten, tags } = req.body;
+            const { tipe, judul, konten, tags, tanggal_publikasi } = req.body;
 
             // Jika judul berubah, perbarui slug-nya
             const slug = judul ? (generateSlug(judul) + '-' + existingData.id) : existingData.slug;
@@ -134,7 +136,7 @@ const publikasiController = {
                 konten: konten || existingData.konten,
                 foto_url,
                 lampiran_url,
-                tanggal_publikasi: existingData.tanggal_publikasi,
+                tanggal_publikasi: (req.admin.role === 'superadmin' && tanggal_publikasi) ? tanggal_publikasi : existingData.tanggal_publikasi,
                 tags: tags !== undefined ? tags : existingData.tags
             });
 

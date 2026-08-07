@@ -15,6 +15,7 @@ import Dashboard from './pages/admin/Dashboard';
 import PerangkatDesa from './pages/admin/PerangkatDesa';
 import UMKM from './pages/admin/UMKM';
 import Publikasi from './pages/admin/Publikasi';
+import ManajemenAdmin from './pages/admin/ManajemenAdmin';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route path="perangkat" element={<PerangkatDesa />} />
             <Route path="umkm" element={<UMKM />} />
             <Route path="publikasi" element={<Publikasi />} />
+            <Route path="pengguna" element={<ManajemenAdmin />} />
           </Route>
         </Route>
 

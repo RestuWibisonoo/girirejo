@@ -25,6 +25,7 @@ const Login = () => {
         // Simpan token JWT dan nama admin ke localStorage browser
         localStorage.setItem('token', token);
         localStorage.setItem('adminName', user.nama_lengkap);
+        localStorage.setItem('adminRole', user.role);
         
         // Redirect sukses ke dashboard admin
         navigate('/admin');
