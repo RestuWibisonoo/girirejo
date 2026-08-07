@@ -51,8 +51,14 @@ const desaProfileController = {
                     data: newProfile
                 });
             } else {
+                // Merge data lama dengan data baru agar tidak hilang
+                const updatedData = {
+                    ...existingProfile,
+                    ...req.body
+                };
+                
                 // Jika sudah ada, update record yang ada
-                await DesaProfileModel.updateProfile(existingProfile.id, req.body);
+                await DesaProfileModel.updateProfile(existingProfile.id, updatedData);
                 const updatedProfile = await DesaProfileModel.getProfile();
                 return res.json({
                     status: "success",
