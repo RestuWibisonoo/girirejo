@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
-import { Shield, Plus, Trash2, UserPlus } from 'lucide-react';
+import { Shield, Plus, Trash2, UserPlus, X } from 'lucide-react';
 
 const ManajemenAdmin = () => {
   const [admins, setAdmins] = useState([]);
