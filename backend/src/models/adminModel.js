@@ -15,7 +15,7 @@ const AdminModel = {
     },
 
     getAllAdmins: async () => {
-        const query = 'SELECT id, username, nama_lengkap, role, created_at FROM admins ORDER BY id ASC';
+        const query = 'SELECT id, username, nama_lengkap, role FROM admins ORDER BY id ASC';
         const [rows] = await db.query(query);
         return rows;
     },
