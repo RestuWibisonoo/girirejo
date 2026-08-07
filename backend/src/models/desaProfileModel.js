@@ -8,23 +8,23 @@ const DesaProfileModel = {
     },
     
     updateProfile: async (id, data) => {
-        const { nama_desa, deskripsi_singkat, sambutan_kades, alamat, kontak_wa, embed_map_url } = data;
+        const { nama_desa, deskripsi_singkat, sambutan_kades, alamat, kontak_wa, embed_map_url, foto_bersama_url } = data;
         const query = `
             UPDATE desa_profile 
-            SET nama_desa = ?, deskripsi_singkat = ?, sambutan_kades = ?, alamat = ?, kontak_wa = ?, embed_map_url = ?
+            SET nama_desa = ?, deskripsi_singkat = ?, sambutan_kades = ?, alamat = ?, kontak_wa = ?, embed_map_url = ?, foto_bersama_url = COALESCE(?, foto_bersama_url)
             WHERE id = ?
         `;
-        const [result] = await db.query(query, [nama_desa, deskripsi_singkat, sambutan_kades, alamat, kontak_wa, embed_map_url, id]);
+        const [result] = await db.query(query, [nama_desa, deskripsi_singkat, sambutan_kades, alamat, kontak_wa, embed_map_url, foto_bersama_url, id]);
         return result.affectedRows;
     },
 
     createProfile: async (data) => {
-        const { nama_desa, deskripsi_singkat, sambutan_kades, alamat, kontak_wa, embed_map_url } = data;
+        const { nama_desa, deskripsi_singkat, sambutan_kades, alamat, kontak_wa, embed_map_url, foto_bersama_url } = data;
         const query = `
-            INSERT INTO desa_profile (nama_desa, deskripsi_singkat, sambutan_kades, alamat, kontak_wa, embed_map_url)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO desa_profile (nama_desa, deskripsi_singkat, sambutan_kades, alamat, kontak_wa, embed_map_url, foto_bersama_url)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         `;
-        const [result] = await db.query(query, [nama_desa, deskripsi_singkat, sambutan_kades, alamat, kontak_wa, embed_map_url]);
+        const [result] = await db.query(query, [nama_desa, deskripsi_singkat, sambutan_kades, alamat, kontak_wa, embed_map_url, foto_bersama_url]);
         return result.insertId;
     }
 };

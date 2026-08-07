@@ -54,14 +54,21 @@ const FeatureCard = ({ icon, title, desc, link, linkLabel }) => {
 const HomePage = () => {
   const [perangkat, setPerangkat] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [profile, setProfile] = useState(null);
 
   const [showIntro, setShowIntro] = useState(() => !sessionStorage.getItem('introPlayed'));
 
   useEffect(() => {
+    // Ambil data perangkat
     api.get('/perangkat-desa')
       .then(res => setPerangkat(res.data.data || []))
       .catch(() => setPerangkat([]))
       .finally(() => setLoading(false));
+      
+    // Ambil data profil (untuk foto bersama, teks sambutan, dll)
+    api.get('/desa-profile')
+      .then(res => setProfile(res.data.data))
+      .catch(() => console.log('Gagal mengambil profil desa'));
 
     if (showIntro) {
       sessionStorage.setItem('introPlayed', 'true');
@@ -344,7 +351,7 @@ const HomePage = () => {
           {/* ===== FOTO BERSAMA ===== */}
           <div className="w-full mb-12 md:mb-16 rounded-3xl overflow-hidden shadow-lg border border-stone-100 bg-stone-100 aspect-video md:aspect-[21/9]">
             <img 
-              src="/foto-bersama.jpg" 
+              src={profile?.foto_bersama_url ? `${import.meta.env.VITE_UPLOAD_URL || '/uploads'}${profile.foto_bersama_url}` : "/foto-bersama.jpg"} 
               alt="Foto Bersama Perangkat Desa" 
               className="w-full h-full object-cover" 
               onError={(e) => e.target.src = 'https://placehold.co/1200x500/e2e8f0/64748b?text=Foto+Bersama+Perangkat+Desa'} 

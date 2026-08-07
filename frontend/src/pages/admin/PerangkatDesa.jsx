@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
 import PerangkatModal from '../../components/admin/PerangkatModal';
-import { Plus, Edit2, Trash2 } from 'lucide-react';
+import { Plus, Edit2, Trash2, UploadCloud, CheckCircle } from 'lucide-react';
 
 const PerangkatDesa = () => {
   const [data, setData] = useState([]);
@@ -10,6 +10,12 @@ const PerangkatDesa = () => {
   // State Kontrol Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editData, setEditData] = useState(null);
+
+  // State Profil (untuk foto bersama)
+  const [profile, setProfile] = useState(null);
+  const [fotoBersama, setFotoBersama] = useState(null);
+  const [uploadingProfile, setUploadingProfile] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
 
   // Mengambil daftar perangkat dari Backend
   const fetchPerangkat = async () => {
@@ -24,8 +30,20 @@ const PerangkatDesa = () => {
     }
   };
 
+  const fetchProfile = async () => {
+    try {
+      const response = await api.get('/desa-profile');
+      if (response.data.data) {
+        setProfile(response.data.data);
+      }
+    } catch (error) {
+      console.error("Gagal mengambil profil desa", error);
+    }
+  };
+
   useEffect(() => {
     fetchPerangkat();
+    fetchProfile();
   }, []);
 
   const handleOpenCreate = () => {
@@ -49,6 +67,30 @@ const PerangkatDesa = () => {
     }
   };
 
+  const handleUploadFotoBersama = async () => {
+    if (!fotoBersama) return;
+    
+    setUploadingProfile(true);
+    const formData = new FormData();
+    formData.append('nama_desa', profile?.nama_desa || 'Girirejo');
+    formData.append('foto_bersama', fotoBersama);
+
+    try {
+      await api.put('/desa-profile', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      setUploadSuccess(true);
+      fetchProfile();
+      setFotoBersama(null);
+      setTimeout(() => setUploadSuccess(false), 3000);
+    } catch (error) {
+      console.error("Gagal mengupload foto bersama", error);
+      alert("Gagal mengupload foto bersama.");
+    } finally {
+      setUploadingProfile(false);
+    }
+  };
+
   return (
     <div className="max-w-6xl mx-auto">
       
@@ -64,6 +106,36 @@ const PerangkatDesa = () => {
         >
           <Plus size={20} /> Tambah Data
         </button>
+      </div>
+
+      {/* Bagian Foto Bersama */}
+      <div className="bg-white border border-stone-100 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-6 mb-8 flex flex-col md:flex-row items-center gap-6">
+        <div className="flex-1">
+          <h2 className="text-lg font-bold text-slate-800 mb-2">Foto Bersama Perangkat Desa</h2>
+          <p className="text-sm text-slate-500 mb-4">Unggah foto ini untuk ditampilkan memanjang di bagian paling atas Beranda publik perangkat desa.</p>
+          <div className="flex items-center gap-3">
+            <input 
+              type="file" 
+              accept="image/*"
+              onChange={(e) => setFotoBersama(e.target.files[0])}
+              className="text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-brand-primary hover:file:bg-emerald-100"
+            />
+            <button 
+              onClick={handleUploadFotoBersama}
+              disabled={!fotoBersama || uploadingProfile}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl font-bold transition-all ${!fotoBersama ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-brand-accent text-white hover:bg-orange-600 shadow-md'}`}
+            >
+              {uploadingProfile ? 'Mengunggah...' : uploadSuccess ? <><CheckCircle size={18} /> Berhasil</> : <><UploadCloud size={18} /> Simpan Foto</>}
+            </button>
+          </div>
+        </div>
+        <div className="w-full md:w-1/3 aspect-video bg-stone-100 rounded-2xl overflow-hidden border border-stone-200 shrink-0 relative">
+          {profile?.foto_bersama_url ? (
+            <img src={`${import.meta.env.VITE_UPLOAD_URL || '/uploads'}${profile.foto_bersama_url}`} alt="Foto Bersama" className="w-full h-full object-cover" />
+          ) : (
+            <span className="absolute inset-0 flex items-center justify-center text-sm text-slate-400 font-medium">Belum ada foto</span>
+          )}
+        </div>
       </div>
 
       {/* Tabel Data Elegan */}

@@ -37,6 +37,10 @@ const desaProfileController = {
                 });
             }
 
+            if (req.file) {
+                req.body.foto_bersama_url = `/uploads/images/${req.file.filename}`;
+            }
+
             if (!existingProfile) {
                 // Jika belum ada record sama sekali, buat baru
                 await DesaProfileModel.createProfile(req.body);
