@@ -5,13 +5,7 @@ import { ArrowRight, Users, Store, BookOpen, MapPin, ChevronDown } from 'lucide-
 import api from '../../services/api';
 import PerangkatCard from '../../components/PerangkatCard';
 
-// --- Data Statis Infografis ---
-const stats = [
-  { label: 'Jiwa Warga', value: '3.247', icon: '👥' },
-  { label: 'KK Terdaftar', value: '892', icon: '🏠' },
-  { label: 'UMKM Aktif', value: '48', icon: '🛒' },
-  { label: 'Luas Wilayah', value: '4,2 Km²', icon: '🗺️' },
-];
+// --- Data Statis Infografis (Dipindah ke dalam komponen untuk state dinamis) ---
 
 // --- Komponen Stat Card ---
 const StatCard = ({ label, value, icon }) => (
@@ -55,6 +49,14 @@ const HomePage = () => {
   const [perangkat, setPerangkat] = useState([]);
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState(null);
+  const [umkmCount, setUmkmCount] = useState('48');
+
+  const stats = [
+    { label: 'Jiwa Warga', value: '3.247', icon: '👥' },
+    { label: 'KK Terdaftar', value: '892', icon: '🏠' },
+    { label: 'UMKM Aktif', value: umkmCount, icon: '🛒' },
+    { label: 'Luas Wilayah', value: '4,2 Km²', icon: '🗺️' },
+  ];
 
   const [showIntro, setShowIntro] = useState(() => !sessionStorage.getItem('introPlayed'));
 
@@ -69,6 +71,20 @@ const HomePage = () => {
     api.get('/desa-profile')
       .then(res => setProfile(res.data.data))
       .catch(() => console.log('Gagal mengambil profil desa'));
+
+    // Ambil data umkm untuk menghitung total
+    api.get('/umkm')
+      .then(res => {
+        if (res.data.data) {
+          const count = res.data.data.length;
+          if (count > 1) {
+            setUmkmCount(`${count - 1}+`);
+          } else {
+            setUmkmCount(count.toString());
+          }
+        }
+      })
+      .catch(() => console.log('Gagal mengambil total umkm'));
 
     if (showIntro) {
       sessionStorage.setItem('introPlayed', 'true');
