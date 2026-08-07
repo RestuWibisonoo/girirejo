@@ -349,7 +349,7 @@ const HomePage = () => {
           </div>
 
           {/* ===== FOTO BERSAMA ===== */}
-          <div className="w-full mb-12 md:mb-16 rounded-3xl overflow-hidden shadow-lg border border-stone-100 bg-stone-100 aspect-video md:aspect-[21/9]">
+          <div className="w-full mb-12 md:mb-16 rounded-3xl overflow-hidden shadow-lg border border-stone-100 bg-stone-100 aspect-[4/3] md:aspect-[16/9]">
             <img 
               src={profile?.foto_bersama_url ? `${import.meta.env.VITE_UPLOAD_URL || '/uploads'}/${profile.foto_bersama_url}` : "/foto-bersama.jpg"} 
               alt="Foto Bersama Perangkat Desa" 

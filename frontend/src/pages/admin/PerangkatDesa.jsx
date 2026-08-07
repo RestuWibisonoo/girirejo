@@ -129,7 +129,7 @@ const PerangkatDesa = () => {
             </button>
           </div>
         </div>
-        <div className="w-full md:w-1/3 aspect-video bg-stone-100 rounded-2xl overflow-hidden border border-stone-200 shrink-0 relative">
+        <div className="w-full md:w-1/3 aspect-[4/3] md:aspect-[16/9] bg-stone-100 rounded-2xl overflow-hidden border border-stone-200 shrink-0 relative">
           {profile?.foto_bersama_url ? (
             <img src={`${import.meta.env.VITE_UPLOAD_URL || '/uploads'}/${profile.foto_bersama_url}`} alt="Foto Bersama" className="w-full h-full object-cover" />
           ) : (
