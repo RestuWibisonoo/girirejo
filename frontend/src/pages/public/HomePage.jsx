@@ -339,7 +339,16 @@ const HomePage = () => {
               Tim Pemerintahan
             </div>
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-4">Perangkat Desa Girirejo</h2>
-            <p className="text-slate-500">Hover pada foto untuk mengenal lebih dekat sosok di balik layanan desa kami.</p>
+          </div>
+
+          {/* ===== FOTO BERSAMA ===== */}
+          <div className="w-full mb-12 md:mb-16 rounded-3xl overflow-hidden shadow-lg border border-stone-100 bg-stone-100 aspect-video md:aspect-[21/9]">
+            <img 
+              src="/foto-bersama.jpg" 
+              alt="Foto Bersama Perangkat Desa" 
+              className="w-full h-full object-cover" 
+              onError={(e) => e.target.src = 'https://placehold.co/1200x500/e2e8f0/64748b?text=Foto+Bersama+Perangkat+Desa'} 
+            />
           </div>
 
           {loading ? (
