@@ -351,7 +351,7 @@ const HomePage = () => {
           {/* ===== FOTO BERSAMA ===== */}
           <div className="w-full mb-12 md:mb-16 rounded-3xl overflow-hidden shadow-lg border border-stone-100 bg-stone-100 aspect-video md:aspect-[21/9]">
             <img 
-              src={profile?.foto_bersama_url ? `${import.meta.env.VITE_UPLOAD_URL || '/uploads'}${profile.foto_bersama_url}` : "/foto-bersama.jpg"} 
+              src={profile?.foto_bersama_url ? `${import.meta.env.VITE_UPLOAD_URL || '/uploads'}/${profile.foto_bersama_url}` : "/foto-bersama.jpg"} 
               alt="Foto Bersama Perangkat Desa" 
               className="w-full h-full object-cover" 
               onError={(e) => e.target.src = 'https://placehold.co/1200x500/e2e8f0/64748b?text=Foto+Bersama+Perangkat+Desa'} 

@@ -131,7 +131,7 @@ const PerangkatDesa = () => {
         </div>
         <div className="w-full md:w-1/3 aspect-video bg-stone-100 rounded-2xl overflow-hidden border border-stone-200 shrink-0 relative">
           {profile?.foto_bersama_url ? (
-            <img src={`${import.meta.env.VITE_UPLOAD_URL || '/uploads'}${profile.foto_bersama_url}`} alt="Foto Bersama" className="w-full h-full object-cover" />
+            <img src={`${import.meta.env.VITE_UPLOAD_URL || '/uploads'}/${profile.foto_bersama_url}`} alt="Foto Bersama" className="w-full h-full object-cover" />
           ) : (
             <span className="absolute inset-0 flex items-center justify-center text-sm text-slate-400 font-medium">Belum ada foto</span>
           )}
